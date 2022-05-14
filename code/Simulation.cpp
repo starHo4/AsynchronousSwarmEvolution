@@ -24,7 +24,7 @@ void Simulation::TestSimulation()
 {
     Initialize();
     cout << "HIROYUKI HOSHI" << endl;
-    cout << generalSeed << endl;
+    cout << (long long) 10000000000 << endl;
 }
 #pragma endregion
 

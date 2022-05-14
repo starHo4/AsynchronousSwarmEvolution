@@ -15,5 +15,15 @@ void Flock::Update()
 
 void Flock::CalcDistance()
 {
+    // for(int i=0; i<flock.size(); i++)
+    // {
+    //     for(int j=i; j<flock.size(); j++)
+    //     {
+    //         if(i == j)
+    //         {
+
+    //         }
+    //     }
+    // }
 }
 #pragma endregion

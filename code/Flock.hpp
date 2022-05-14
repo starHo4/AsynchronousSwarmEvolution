@@ -19,7 +19,7 @@ class Flock
     int NumAlive;
     // Distance Matrix
     vector<vector<double>> MatDistance;
-    // vector<vector<PVector>> MatDiffPos;
+    vector<vector<PVector>> MatDiffPos;
 
     //* Public Methods *//
     // void AddAgent(shared_ptr<Agent> &a);
