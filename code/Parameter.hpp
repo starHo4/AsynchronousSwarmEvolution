@@ -5,7 +5,7 @@
 #define FIELD_W 2048
 #define FIELD_H 2048
 #define FREE_TIMESTEPS 1000
-#define MAX_TIMESTEPS 100000000 // 100 M
+#define MAX_TIMESTEPS 1000000 // 1 M
 
 // Parameters for GA
 #define GENE_MUTATION_RATE 0.005
