@@ -24,5 +24,6 @@ using namespace std;
 #define SAVECHROM_INTERVAL 1000
 
 // Include Parameters
+#include "Parameter.hpp"
 
 #endif
