@@ -23,6 +23,8 @@ void Simulation::RunSimulation()
 void Simulation::TestSimulation()
 {
     Initialize();
+    cout << "HIROYUKI HOSHI" << endl;
+    cout << generalSeed << endl;
 }
 #pragma endregion
 
