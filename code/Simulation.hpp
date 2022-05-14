@@ -2,6 +2,7 @@
 #define __Simulation__
 
 #include "Header.hpp"
+#include  "Flock.hpp"
 
 class Simulation
 {
@@ -14,6 +15,9 @@ private:
     //* Priavte Methods *//
     // Initialization
     void Initialize();
+
+    // Flock of preys
+    Flock SimulateFlock;
 
 public:
     //* Constructor & Destructor *//
