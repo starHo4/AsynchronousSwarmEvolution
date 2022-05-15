@@ -2,7 +2,8 @@
 #define __Agent__
 
 #include "Header.hpp"
-// #include "RNN.hpp"
+// #include "Chromosome.hpp"
+#include "RNN.hpp"
 #include "PVector.hpp"
 
 class Flock;
@@ -29,7 +30,16 @@ class Agent
     double Speed;
     double AngleSpeed;
     // Brain
-    // RNN Brain;
+    RNN Brain;
+
+    //* Protected Methods *//
+    virtual void Detect(const Flock &f);
+    void TakeAction(const int a);
+    
+    public:
+    //* Constructors & Destructor *//
+    Agent(){}
+    // Agent(mt19937_64 &mt, const Chromosome &_chr, const int &_id);
 };
 
 #endif
