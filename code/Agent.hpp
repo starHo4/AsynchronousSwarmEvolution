@@ -2,7 +2,7 @@
 #define __Agent__
 
 #include "Header.hpp"
-// #include "Chromosome.hpp"
+#include "Chromosome.hpp"
 #include "RNN.hpp"
 #include "PVector.hpp"
 
@@ -39,7 +39,7 @@ class Agent
     public:
     //* Constructors & Destructor *//
     Agent(){}
-    // Agent(mt19937_64 &mt, const Chromosome &_chr, const int &_id);
+    Agent(mt19937_64 &mt, const Chromosome &_chr, const int &_id);
 };
 
 #endif

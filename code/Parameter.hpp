@@ -9,6 +9,7 @@
 
 // Parameters for GA
 #define GENE_MUTATION_RATE 0.005
+#define GENE_MUTATION_STD 0.05
 
 // Parameters for an agent (common properties)
 #define N_SEGMENT_SENSOR 12
