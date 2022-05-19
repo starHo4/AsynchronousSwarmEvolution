@@ -34,7 +34,7 @@ protected:
 
     //* Protected Methods *//
     virtual void Detect(const Flock &f);
-    void TakeAction(const int a);
+    void TakeAction(const int &a);
 
 public:
     //* Constructors & Destructor *//
