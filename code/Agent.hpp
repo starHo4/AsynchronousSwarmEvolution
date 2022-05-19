@@ -10,11 +10,11 @@ class Flock;
 
 class Agent
 {
-    private:
+private:
     //* Private Methods *//
     void Borders();
 
-    protected:
+protected:
     //* Protected Variables *//
     // Common properties //
     int ID;
@@ -35,11 +35,27 @@ class Agent
     //* Protected Methods *//
     virtual void Detect(const Flock &f);
     void TakeAction(const int a);
-    
-    public:
+
+public:
     //* Constructors & Destructor *//
-    Agent(){}
+    Agent() {}
     Agent(mt19937_64 &mt, const Chromosome &_chr, const int &_id);
+    virtual ~Agent() {}
+
+    //* Public Variables *//
+    bool F_live;
+    bool F_predator;
+
+    //* Public Methods *//
+    virtual void Run(mt19937_64 &mt, Flock &f);
+    void Update();
+
+    //* Getter *//
+    int getID() const { return ID; };
+    PVector getPos() const { return Pos; };
+    PVector getVel() const { return Vel; };
+    double getAngle() const { return Angle; };
+    int getAction() const { return Action; };
 };
 
 #endif
