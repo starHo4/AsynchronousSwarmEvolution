@@ -10,4 +10,5 @@ int main(int argc, char *argv[])
         // simulation.RunSimulation();
         simulation.TestSimulation();
     }
+    return 0;
 }
