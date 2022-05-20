@@ -3,6 +3,7 @@
 
 #include "Header.hpp"
 #include "Flock.hpp"
+#include "Predator.hpp"
 
 class Simulation
 {
@@ -14,6 +15,8 @@ private:
 
     // Flock of preys
     Flock SimulateFlock;
+    // Flock of predators
+    vector<Predator> Predators;
 
     //* Priavte Methods *//
     // Initialization
