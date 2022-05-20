@@ -13,6 +13,8 @@ private:
     // Kill Delay;
     int Delay;
 
+    int AttackNum;
+
     //* Private Methods *//
     virtual void Detect(const Flock &f);
     void TryPredation(mt19937_64 &mt, Flock &f);
@@ -20,7 +22,7 @@ private:
 public:
     //* Constructors *//
     Predator() {}
-    Predator(mt19937_64 &mt, const Chromosome _chr);
+    Predator(mt19937_64 &mt, const Chromosome &_chr);
     //* Destructor *//
     virtual ~Predator() {}
 

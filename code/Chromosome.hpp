@@ -17,7 +17,7 @@ public:
     //* Destructor *//
     ~Chromosome() {}
 
-    vector<double> genotype;
+    vector<double> Genotype;
 
     //* Public Methods *//
     void Mutation(mt19937_64 &mt);
