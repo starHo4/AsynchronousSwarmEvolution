@@ -19,10 +19,11 @@
 #define N_INIT_PREYS 200
 #define RADIUS_PREY 100
 #define SPEED_PREY 1.0
-#define ANGELESPEED_PREY 8.0 // degree
+#define ANGLESPEED_PREY 8.0 // degree
 #define SAFETY_DIST 30.0
 #define INIT_MEAN_ENERGY 2000.0
 #define INIT_STD_ENERGY 100.0
+#define N_SENSOR_LAYER_PREY 3
 
 // Parameters for predator
 #define N_PREDATOR 5

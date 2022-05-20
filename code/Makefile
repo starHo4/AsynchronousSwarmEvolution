@@ -1,4 +1,4 @@
-OBJS = main.o Agent.o Chromosome.o Flock.o Neuron.o Predator.o PVector.o RNN.o Simulation.o
+OBJS = main.o Agent.o Chromosome.o Flock.o Neuron.o Predator.o Prey.o PVector.o RNN.o Simulation.o
 CC = g++
 STD = -std=c++17
 
@@ -18,6 +18,8 @@ Neuron.o : Neuron.cpp
 	$(CC) $(STD) -g -c Neuron.cpp
 Predator.o : Predator.cpp
 	$(CC) $(STD) -g -c Predator.cpp
+Prey.o : Prey.cpp
+	$(CC) $(STD) -g -c Prey.cpp
 PVector.o : PVector.cpp
 	$(CC) $(STD) -g -c PVector.cpp
 RNN.o : RNN.cpp

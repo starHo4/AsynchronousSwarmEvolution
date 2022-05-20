@@ -40,7 +40,7 @@ public:
     //* Constructors & Destructor *//
     Agent() {}
     Agent(mt19937_64 &mt, const Chromosome &_chr);
-    Agent(mt19937_64 &mt, const Chromosome &_chr, const int &_id);
+    Agent(mt19937_64 &mt, const Chromosome &_chr, const long long &_id);
     virtual ~Agent() {}
 
     //* Public Variables *//

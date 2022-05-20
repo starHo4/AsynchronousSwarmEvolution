@@ -2,9 +2,9 @@
 #define __Flock__
 
 #include "Header.hpp"
-#include "Agent.hpp"
 #include "Chromosome.hpp"
 #include "PVector.hpp"
+#include "Prey.hpp"
 
 class Flock
 {
@@ -15,7 +15,7 @@ class Flock
     ~Flock(){}
 
     //* Main body *//
-    vector<shared_ptr<Agent>> flock;    // To modify
+    vector<shared_ptr<Prey>> flock;    // To modify
 
     //* Public Variables *//
     int NumAlive;
