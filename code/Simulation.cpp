@@ -18,18 +18,23 @@ void Simulation::RunSimulation()
     Initialize();
 
     // Simulate for free running
+    PreFlocking();
 }
 
 void Simulation::TestSimulation()
 {
     Initialize();
     cout << "HIROYUKI HOSHI" << endl;
-    cout << (long long) 10000000000 << endl;
+    cout << (long long)10000000000 << endl;
 }
 #pragma endregion
 
 #pragma region PrivateMethods
 void Simulation::Initialize()
+{
+}
+
+void Simulation::PreFlocking()
 {
 }
 #pragma endregion

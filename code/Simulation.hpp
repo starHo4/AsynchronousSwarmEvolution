@@ -15,6 +15,8 @@ private:
     //* Priavte Methods *//
     // Initialization
     void Initialize();
+    // Free running for preys
+    void PreFlocking();
 
     // Flock of preys
     Flock SimulateFlock;
