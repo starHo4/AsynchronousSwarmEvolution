@@ -2,7 +2,7 @@
 #define __Simulation__
 
 #include "Header.hpp"
-#include  "Flock.hpp"
+#include "Flock.hpp"
 
 class Simulation
 {
@@ -12,14 +12,14 @@ private:
     mt19937_64 mt;
     int generalSeed;
 
+    // Flock of preys
+    Flock SimulateFlock;
+
     //* Priavte Methods *//
     // Initialization
     void Initialize();
     // Free running for preys
     void PreFlocking();
-
-    // Flock of preys
-    Flock SimulateFlock;
 
 public:
     //* Constructor & Destructor *//
