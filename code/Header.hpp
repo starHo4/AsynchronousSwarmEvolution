@@ -6,6 +6,7 @@
 #include <cmath>
 #include <filesystem>
 #include <fstream>
+#include <map>
 #include <memory>
 #include <random>
 #include <vector>

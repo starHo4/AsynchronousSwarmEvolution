@@ -15,7 +15,7 @@ Simulation::Simulation(const int &_N)
 void Simulation::RunSimulation()
 {
     // Initialization
-    Initialize();
+    Init_PlacePreys();
 
     // Simulate for free running
     PreFlocking();
@@ -25,14 +25,17 @@ void Simulation::RunSimulation()
 
 void Simulation::TestSimulation()
 {
-    Initialize();
     cout << "HIROYUKI HOSHI" << endl;
     cout << (long long)10000000000 << endl;
 }
 #pragma endregion
 
 #pragma region PrivateMethods
-void Simulation::Initialize()
+void Simulation::Init_PlacePreys()
+{
+}
+
+void Simulation::Init_PlacePredators()
 {
 }
 

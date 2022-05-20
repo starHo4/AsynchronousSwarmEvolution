@@ -20,7 +20,8 @@ private:
 
     //* Priavte Methods *//
     // Initialization
-    void Initialize();
+    void Init_PlacePreys();
+    void Init_PlacePredators();
     // Free running for preys
     void PreFlocking();
 

@@ -2,13 +2,13 @@
 #define __Parameter__
 
 // The const. for simulation
-#define FIELD_W 2048
-#define FIELD_H 2048
+#define FIELD_W 1024
+#define FIELD_H 1024
 #define FREE_TIMESTEPS 1000
 #define MAX_TIMESTEPS 1000000 // 1 M
 
 // Parameters for GA
-#define GENE_MUTATION_RATE 0.005
+#define GENE_MUTATION_RATE 0.01
 #define GENE_MUTATION_STD 0.05
 
 // Parameters for an agent (common properties)
@@ -17,16 +17,17 @@
 
 // Parameters for preys
 #define N_INIT_PREYS 200
+#define INIT_MEAN_ENERGY 2000.0
+#define INIT_STD_ENERGY 100.0
 #define RADIUS_PREY 100
 #define SPEED_PREY 1.0
 #define ANGLESPEED_PREY 8.0 // degree
 #define SAFETY_DIST 30.0
-#define INIT_MEAN_ENERGY 2000.0
-#define INIT_STD_ENERGY 100.0
 #define N_SENSOR_LAYER_PREY 3
+#define LIFESPAN 2000
 
 // Parameters for predator
-#define N_PREDATOR 5
+#define N_PREDATOR 1
 #define RADIUS_PREDATOR 200
 #define SPEED_PREDATOR 3.0
 #define ANGLESPEED_PREDATOR 6.0 // degree
