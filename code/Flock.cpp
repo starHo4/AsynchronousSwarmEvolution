@@ -1,6 +1,11 @@
 #include "Flock.hpp"
 
 #pragma region PublicMethods
+void Flock::AddAgent(shared_ptr<Prey> &a)
+{
+    flock.emplace_back(move(a));
+}
+
 void Flock::PreFlocking(mt19937_64 &mt)
 {
 }

@@ -8,14 +8,14 @@
 
 class Flock
 {
-    private:
-    public:
+private:
+public:
     //* Constructor & Destructor *//
-    Flock(){}
-    ~Flock(){}
+    Flock() {}
+    ~Flock() {}
 
     //* Main body *//
-    vector<shared_ptr<Prey>> flock;    // To modify
+    vector<shared_ptr<Prey>> flock; // To modify
 
     //* Public Variables *//
     int NumAlive;
@@ -24,7 +24,7 @@ class Flock
     vector<vector<PVector>> MatDiffPos;
 
     //* Public Methods *//
-    // void AddAgent(shared_ptr<Agent> &a);
+    void AddAgent(shared_ptr<Prey> &a);
     void PreFlocking(mt19937_64 &mt);
     void Flocking(mt19937_64 &mt);
     void Update();
