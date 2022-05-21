@@ -1,6 +1,14 @@
 #include "Flock.hpp"
 
 #pragma region PublicMethods
+void Flock::Init()
+{
+    flock.clear();
+    NumAlive = 0;
+
+    //* To Add processing!! *//
+}
+
 void Flock::AddAgent(shared_ptr<Prey> &a)
 {
     flock.emplace_back(move(a));
