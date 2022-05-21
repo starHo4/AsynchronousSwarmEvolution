@@ -23,10 +23,12 @@ void Flock::AddNewPrey(shared_ptr<Prey> &a)
         long long secondID = a->ID;
         if (firstID != secondID)
         {
-            if(firstID > secondID)
+            if (firstID > secondID)
             {
                 swap(firstID, secondID);
             }
+            MatDistance.insert(make_pair(make_pair(firstID, secondID), 0));
+            MatDiffPos.insert(make_pair(make_pair(firstID, secondID), PVector(0, 0)));
             CalcEachDistance(firstID, secondID);
         }
     }
@@ -87,6 +89,20 @@ void Flock::RemoveDeadPreys()
 
 void Flock::CalcEachDistance(const long long &_firstID, const long long &_secondID)
 {
-    
+    auto itr_firstPrey = find_if(flock.begin(), flock.end(), [&_firstID](shared_ptr<Prey> &a)
+                                 { return a->ID == _firstID; });
+    auto itr_secondPrey = find_if(flock.begin(), flock.end(), [&_secondID](shared_ptr<Prey> &a)
+                                  { return a->ID == _secondID; });
+    if (itr_firstPrey == flock.end() || itr_secondPrey == flock.end())
+    {
+        abort();
+    }
+
+    shared_ptr<Prey> firstPrey = *itr_firstPrey;
+    shared_ptr<Prey> secondPrey = *itr_secondPrey;
+    PVector diff = firstPrey->getPos().TroidalShortest(secondPrey->getPos(), FIELD_W, FIELD_H);
+    double dist = diff.Norm();
+    MatDistance[make_pair(_firstID, _secondID)] = dist;
+    MatDiffPos[make_pair(_firstID, _secondID)] = diff;
 }
 #pragma endregion
