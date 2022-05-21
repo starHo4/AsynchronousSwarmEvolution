@@ -15,8 +15,34 @@ Chromosome::Chromosome(mt19937_64 &mt, const bool &_Fpredator)
     }
 }
 
-Chromosome::Chromosome(const string &fileName)
+Chromosome::Chromosome(const string &fileName, const bool &_Fpredator)
 {
+    ifstream fin(fileName);
+    if(!fin)
+    {
+        cout << "Cannot opening the file" << endl;
+        abort();
+    }
+
+    int stateSize = (_Fpredator) ? N_SENSOR + N_MEMORY + N_ACTUATOR : N_SENSOR_LAYER_PREY * N_SENSOR + N_MEMORY + N_ACTUATOR;
+    int size = (stateSize + 1 /* bias */) * N_MEMORY + (N_MEMORY + 1 /* bias */) * N_ACTUATOR;
+    Genotype.resize(size);
+    int i = 0;
+    while(true)
+    {
+        fin >> Genotype[i];
+        i++;
+        if(fin.eof())
+        {
+            break;
+        }
+    }
+    fin.close();
+
+    if(i != size)
+    {
+        abort();
+    }
 }
 #pragma endregion
 

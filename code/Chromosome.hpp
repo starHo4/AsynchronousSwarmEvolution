@@ -13,7 +13,7 @@ public:
     //* Constructors *//
     Chromosome() {}
     Chromosome(mt19937_64 &mt, const bool &_Fpredator);
-    Chromosome(const string &fileName);
+    Chromosome(const string &fileName, const bool &_Fpredator);
     //* Destructor *//
     ~Chromosome() {}
 

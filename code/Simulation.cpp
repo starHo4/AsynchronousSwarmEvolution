@@ -30,33 +30,11 @@ void Simulation::RunSimulation()
 
 void Simulation::TestSimulation()
 {
-    map<ll, double> m1;
-    m1.insert(make_pair(100, 0.01));
-    m1.insert(make_pair(1000, 0.001));
-    m1.insert(make_pair(1, 1));
-    m1.insert(make_pair(10, 0.1));
-
-    auto itr = m1.begin();
-    auto endItr = m1.end();
-
-    for (; itr != endItr;)
-    {
-        if(itr->first <= 10)
-        {
-            itr = m1.erase(itr);
-        }
-        else
-        {
-            ++itr;
-        }
-    }
-
-    itr = m1.begin();
-    for(; itr != endItr; itr++)
-    {
-        cout << "key = " << itr->first << " ";
-        cout << "value = " << itr->second << endl;
-    }
+    cout << "hoshi" << endl;
+    Init_PlacePreys();
+    cout << "hoshi" << endl;
+    Init_PlacePredators();
+    cout << "hoshi" << endl;
 }
 #pragma endregion
 
@@ -64,9 +42,10 @@ void Simulation::TestSimulation()
 void Simulation::Init_PlacePreys()
 {
     SimulateFlock.Init();
-    string fileName = FILEPATH_GENOME;
-    fileName += "Preys/Chromosome.csv";
-    Chromosome chr_preys(fileName);
+    filesystem::path filePath = filesystem::current_path();
+    filePath += FILEPATH_GENOME;
+    filePath += "Preys/Chromosome.csv";
+    Chromosome chr_preys(filePath.string(), false);
     for (int n = 0; n < N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
@@ -78,9 +57,10 @@ void Simulation::Init_PlacePreys()
 void Simulation::Init_PlacePredators()
 {
     Predators = vector<Predator>();
-    string fileName = FILEPATH_GENOME;
-    fileName += "Predators/Chromosome.csv";
-    Chromosome chr_predator(fileName);
+    filesystem::path filePath = filesystem::current_path();
+    filePath += FILEPATH_GENOME;
+    filePath += "Predators/Chromosome.csv";
+    Chromosome chr_predator(filePath.string(), true);
     for (int n = 0; n < N_PREDATOR; n++)
     {
         long long id = -(n + 1);
