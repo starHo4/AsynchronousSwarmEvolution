@@ -6,6 +6,8 @@
 #include "PVector.hpp"
 #include "Prey.hpp"
 
+class Prey;
+
 class Flock
 {
 private:

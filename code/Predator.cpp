@@ -1,7 +1,7 @@
 #include "Predator.hpp"
 
 #pragma region Constructor
-Predator::Predator(mt19937_64 &mt, const Chromosome &_chr) : Agent::Agent(mt, _chr)
+Predator::Predator(mt19937_64 &mt, const Chromosome &_chr, const long long &_id) : Agent::Agent(mt, _chr, _id)
 {
     F_predator = true;
 

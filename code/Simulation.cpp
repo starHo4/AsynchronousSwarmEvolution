@@ -21,6 +21,7 @@ void Simulation::RunSimulation()
     PreFlocking();
 
     // Place Predators into the environment
+    Init_PlacePredators();
 }
 
 void Simulation::TestSimulation()
@@ -33,6 +34,7 @@ void Simulation::TestSimulation()
 #pragma region PrivateMethods
 void Simulation::Init_PlacePreys()
 {
+    
 }
 
 void Simulation::Init_PlacePredators()
