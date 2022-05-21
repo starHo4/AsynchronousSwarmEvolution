@@ -1,7 +1,7 @@
 #include "Prey.hpp"
 
 #pragma region Constructor
-Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const long long  &_id) : Agent::Agent(mt, _chr, _id)
+Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const long long &_id) : Agent::Agent(mt, _chr, _id)
 {
     F_predator = false;
 
@@ -39,7 +39,7 @@ void Prey::Run(mt19937_64 &mt, Flock &f)
 }
 #pragma endregion
 
-#pragma region PrivateMethods
+#pragma region ProtectedMethods
 void Prey::Detect(const Flock &f)
 {
     Brain.ClearSensor();
@@ -51,7 +51,7 @@ void Prey::Detect(const Flock &f)
         {
             PVector toA = f.MatDiffPos[ID][i];
             double toA_Norm = f.MatDistance[ID][i];
-            if(0 < toA_Norm && toA_Norm < NearestDistance)
+            if (0 < toA_Norm && toA_Norm < NearestDistance)
             {
                 NearestDistance = toA_Norm;
             }
@@ -79,4 +79,12 @@ void Prey::Detect(const Flock &f)
         }
     }
 }
-#pragma endregion
+
+void Prey::CheckDead()
+{
+    if (Energy < 0)
+    {
+        F_live = false;
+    }
+}
+#pragma endregion ProtectedMethods

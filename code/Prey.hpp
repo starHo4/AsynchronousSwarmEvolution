@@ -8,8 +8,11 @@
 class Prey : public Agent
 {
 private:
-    //* Private Methods *//
+
+protected:
+    //* Protected Methods *//
     virtual void Detect(const Flock &f);
+    void CheckDead();
 
 public:
     //* Constructors *//
@@ -19,6 +22,9 @@ public:
     virtual ~Prey() {}
 
     //* Public Variables *//
+    // Energy
+    double Energy;
+    // For Measures
     int NearbyCount;
     int NearestDistance;
 
