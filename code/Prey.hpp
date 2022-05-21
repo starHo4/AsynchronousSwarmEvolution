@@ -17,7 +17,7 @@ protected:
 public:
     //* Constructors *//
     Prey() {}
-    Prey(mt19937_64 &mt, const Chromosome &_chr, const long long &_id);
+    Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id);
     //* Destructor *//
     virtual ~Prey() {}
 

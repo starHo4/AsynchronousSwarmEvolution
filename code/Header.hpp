@@ -29,7 +29,8 @@ using namespace std;
 #include "Parameter.hpp"
 #include "PVector.hpp"
 
-typedef map<pair<long long, long long>, double> MatrixDistance;
-typedef map<pair<long long, long long>, PVector> MatrixDiffPos;
+typedef long long ll;
+typedef map<pair<ll, ll>, double> MatrixDistance;
+typedef map<pair<ll, ll>, PVector> MatrixDiffPos;
 
 #endif

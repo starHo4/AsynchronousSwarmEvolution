@@ -1,7 +1,7 @@
 #include "Prey.hpp"
 
 #pragma region Constructor
-Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const long long &_id) : Agent::Agent(mt, _chr, _id)
+Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id) : Agent::Agent(mt, _chr, _id)
 {
     F_predator = false;
 
@@ -49,8 +49,17 @@ void Prey::Detect(const Flock &f)
     {
         if (f.flock[i]->F_live)
         {
-            PVector toA = f.MatDiffPos[ID][i];
-            double toA_Norm = f.MatDistance[ID][i];
+            ll firstID = ID;
+            ll secondID = f.flock[i]->ID;
+            bool swaped = false;
+            if (firstID > secondID)
+            {
+                swap(firstID, secondID);
+                swaped = true;
+            }
+            pair<ll, ll> p = make_pair(firstID, secondID);
+            PVector toA = (swaped) ? -1 * f.MatDiffPos[p] : f.MatDiffPos[p];
+            double toA_Norm = f.MatDistance[p];
             if (0 < toA_Norm && toA_Norm < NearestDistance)
             {
                 NearestDistance = toA_Norm;

@@ -22,7 +22,7 @@ private:
 public:
     //* Constructors *//
     Predator() {}
-    Predator(mt19937_64 &mt, const Chromosome &_chr, const long long &_id);
+    Predator(mt19937_64 &mt, const Chromosome &_chr, const ll &_id);
     //* Destructor *//
     virtual ~Predator() {}
 
