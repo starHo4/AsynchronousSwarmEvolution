@@ -26,7 +26,7 @@ public:
 
     //* Public Methods *//
     void Init();
-    void AddAgent(shared_ptr<Prey> &a);
+    void AddNewPrey(shared_ptr<Prey> &a);
     void PreFlocking(mt19937_64 &mt);
     void Flocking(mt19937_64 &mt);
     void Update();

@@ -51,7 +51,7 @@ void Simulation::Init_PlacePreys()
     for(int n=0; n<N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
-        SimulateFlock.AddAgent(p);
+        SimulateFlock.AddNewPrey(p);
         forID++;
     }
 }

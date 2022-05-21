@@ -49,7 +49,6 @@ public:
     void Update();
 
     //* Getter *//
-    int getID() const { return ID; };
     PVector getPos() const { return Pos; };
     PVector getVel() const { return Vel; };
     double getAngle() const { return Angle; };
