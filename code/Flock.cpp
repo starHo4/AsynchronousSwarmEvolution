@@ -15,6 +15,21 @@ void Flock::AddNewPrey(shared_ptr<Prey> &a)
 {
     flock.emplace_back(move(a));
     NumAlive++;
+
+    // Add new distances and differences of Pos between "a" and others
+    for (int i = 0; i < flock.size(); i++)
+    {
+        long long firstID = flock[i]->ID;
+        long long secondID = a->ID;
+        if (firstID != secondID)
+        {
+            if(firstID > secondID)
+            {
+                swap(firstID, secondID);
+            }
+            CalcEachDistance(firstID, secondID);
+        }
+    }
 }
 
 void Flock::PreFlocking(mt19937_64 &mt)
@@ -70,10 +85,8 @@ void Flock::RemoveDeadPreys()
     }
 }
 
-void Flock::CalcDistance()
+void Flock::CalcEachDistance(const long long &_firstID, const long long &_secondID)
 {
-    for (int i = 0; i < MatDistance.size(); i++)
-    {
-    }
+    
 }
 #pragma endregion
