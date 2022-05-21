@@ -27,6 +27,13 @@ void Flock::Flocking(mt19937_64 &mt)
 
 void Flock::Update()
 {
+    for (int i = 0; i < flock.size(); i++)
+    {
+        if (flock[i]->F_live)
+        {
+            flock[i]->Update();
+        }
+    }
 }
 
 void Flock::RemoveDeadPreys()
@@ -65,15 +72,8 @@ void Flock::RemoveDeadPreys()
 
 void Flock::CalcDistance()
 {
-    // for(int i=0; i<flock.size(); i++)
-    // {
-    //     for(int j=i; j<flock.size(); j++)
-    //     {
-    //         if(i == j)
-    //         {
-
-    //         }
-    //     }
-    // }
+    for (int i = 0; i < MatDistance.size(); i++)
+    {
+    }
 }
 #pragma endregion
