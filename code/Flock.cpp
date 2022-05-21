@@ -108,6 +108,22 @@ void Flock::RemoveDeadPreys()
     }
 }
 
+void Flock::CalcAllDistances()
+{
+    if(MatDistance.size() != MatDiffPos.size())
+    {
+        abort();
+    }
+    auto begin = MatDistance.begin();
+    auto end = MatDistance.end();
+    for(auto itr = begin; itr != end; itr++)
+    {
+        ll firstID = itr->first.first;
+        ll secondID = itr->first.second;
+        CalcEachDistance(firstID, secondID);
+    }
+}
+
 void Flock::CalcEachDistance(const ll &_firstID, const ll &_secondID)
 {
     auto itr_firstPrey = find_if(flock.begin(), flock.end(), [&_firstID](shared_ptr<Prey> &a)

@@ -31,6 +31,7 @@ public:
     void Flocking(mt19937_64 &mt);
     void Update();
     void RemoveDeadPreys();
+    void CalcAllDistances();
     void CalcEachDistance(const ll &_firstID, const ll &_secondID);
 };
 
