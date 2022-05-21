@@ -58,8 +58,8 @@ void Predator::Detect(const Flock &f)
     {
         if (f.flock[i]->F_live && !f.flock[i]->F_predator)
         {
-            PVector toA = f.MatDiffPos[make_pair(ID, f.flock[i]->ID)];
-            double toA_Norm = f.MatDistance[make_pair(ID, f.flock[i]->ID)];
+            PVector toA = f.MatDiffPos.at(make_pair(ID, f.flock[i]->ID));
+            double toA_Norm = f.MatDistance.at(make_pair(ID, f.flock[i]->ID));
             if (0 < toA_Norm && toA_Norm <= Radius)
             {
                 double bAngle = Vel.CalcBetweenAngle(toA);

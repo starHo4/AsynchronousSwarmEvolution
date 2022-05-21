@@ -58,8 +58,8 @@ void Prey::Detect(const Flock &f)
                 swaped = true;
             }
             pair<ll, ll> p = make_pair(firstID, secondID);
-            PVector toA = (swaped) ? -1 * f.MatDiffPos[p] : f.MatDiffPos[p];
-            double toA_Norm = f.MatDistance[p];
+            PVector toA = (swaped) ? -1 * f.MatDiffPos.at(p) : f.MatDiffPos.at(p);
+            double toA_Norm = f.MatDistance.at(p);
             if (0 < toA_Norm && toA_Norm < NearestDistance)
             {
                 NearestDistance = toA_Norm;

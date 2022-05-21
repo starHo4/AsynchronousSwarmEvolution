@@ -19,8 +19,8 @@ void Flock::AddNewPrey(shared_ptr<Prey> &a)
     // Add new distances and differences of Pos between "a" and others
     for (int i = 0; i < flock.size(); i++)
     {
-        long long firstID = flock[i]->ID;
-        long long secondID = a->ID;
+        ll firstID = flock[i]->ID;
+        ll secondID = a->ID;
         if (firstID != secondID)
         {
             if (firstID > secondID)
@@ -56,7 +56,7 @@ void Flock::Update()
 void Flock::RemoveDeadPreys()
 {
     // Extract ID for removing dead preys
-    vector<long long> rmvID = vector<long long>();
+    vector<ll> rmvID = vector<ll>();
     for (int i = 0; i < flock.size(); i++)
     {
         if (!flock[i]->F_live)
@@ -73,21 +73,42 @@ void Flock::RemoveDeadPreys()
     // Remove distances related to the dead preys
     for (int i = 0; i < rmvID.size(); i++)
     {
-        auto rmv_MD = remove_if(MatDistance.begin(), MatDistance.end(), [&rmvID, &i](pair<long long, long long> &p)
-                                { return p.first == rmvID[i]; });
-        MatDistance.erase(rmv_MD, MatDistance.end());
+
+        auto itr = MatDistance.begin();
+        auto endItr = MatDistance.end();
+        for (; itr != endItr;)
+        {
+            if (itr->first.first == rmvID[i])
+            {
+                itr = MatDistance.erase(itr);
+            }
+            else
+            {
+                ++itr;
+            }
+        }
     }
 
     // Remove Difference of Pos related to the dead preys
     for (int i = 0; i < rmvID.size(); i++)
     {
-        auto rmv_MDP = remove_if(MatDiffPos.begin(), MatDiffPos.end(), [&rmvID, &i](pair<long long, long long> &p)
-                                 { return p.first == rmvID[i]; });
-        MatDiffPos.erase(rmv_MDP, MatDiffPos.end());
+        auto itr = MatDiffPos.begin();
+        auto endItr = MatDiffPos.end();
+        for (; itr != endItr;)
+        {
+            if (itr->first.first == rmvID[i])
+            {
+                itr = MatDiffPos.erase(itr);
+            }
+            else
+            {
+                ++itr;
+            }
+        }
     }
 }
 
-void Flock::CalcEachDistance(const long long &_firstID, const long long &_secondID)
+void Flock::CalcEachDistance(const ll &_firstID, const ll &_secondID)
 {
     auto itr_firstPrey = find_if(flock.begin(), flock.end(), [&_firstID](shared_ptr<Prey> &a)
                                  { return a->ID == _firstID; });
