@@ -12,6 +12,7 @@ void Flock::Init()
 void Flock::AddAgent(shared_ptr<Prey> &a)
 {
     flock.emplace_back(move(a));
+    NumAlive++;
 }
 
 void Flock::PreFlocking(mt19937_64 &mt)
