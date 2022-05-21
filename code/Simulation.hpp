@@ -13,6 +13,8 @@ private:
     mt19937_64 mt;
     int generalSeed;
 
+    // For Iteration of ID
+    long long forID;
     // Flock of preys
     Flock SimulateFlock;
     // Flock of predators

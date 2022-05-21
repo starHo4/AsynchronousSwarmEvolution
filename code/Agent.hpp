@@ -16,8 +16,6 @@ private:
 
 protected:
     //* Protected Variables *//
-    // Common properties //
-    int ID;
     // Physical states //
     PVector Pos;
     PVector Vel;
@@ -43,6 +41,7 @@ public:
     virtual ~Agent() {}
 
     //* Public Variables *//
+    long long ID;
     bool F_live;
     bool F_predator;
 

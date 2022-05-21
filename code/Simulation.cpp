@@ -8,6 +8,8 @@ Simulation::Simulation(const int &_N)
     uniform_int_distribution<int> uid_Seed(0, INT32_MAX);
     int NewRandomSeed = uid_Seed(mt);
     mt.seed(NewRandomSeed);
+
+    forID = 0;
 }
 #pragma endregion
 
@@ -22,6 +24,8 @@ void Simulation::RunSimulation()
 
     // Place Predators into the environment
     Init_PlacePredators();
+
+    // Main Loop
 }
 
 void Simulation::TestSimulation()
@@ -42,6 +46,14 @@ void Simulation::TestSimulation()
 #pragma region PrivateMethods
 void Simulation::Init_PlacePreys()
 {
+    SimulateFlock.Init();
+    Chromosome chr_preys/* fileName */;
+    for(int n=0; n<N_INIT_PREYS; n++)
+    {
+        shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
+        SimulateFlock.AddAgent(p);
+        forID++;
+    }
 }
 
 void Simulation::Init_PlacePredators()

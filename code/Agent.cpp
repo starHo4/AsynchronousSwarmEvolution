@@ -3,10 +3,10 @@
 #pragma region Constructor
 Agent::Agent(mt19937_64 &mt, const Chromosome &_chr, const long long &_id)
 {
+    ID = _id;
     F_live = true;
 
     VisionAngle = 2 * PI - (N_SEGMENT_SENSOR * EACH_SEGMENT_ANGLE) / 180 * PI;
-    ID = _id;
 }
 #pragma endregion Constructor
 
