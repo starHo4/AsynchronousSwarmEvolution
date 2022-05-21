@@ -64,7 +64,9 @@ void Simulation::TestSimulation()
 void Simulation::Init_PlacePreys()
 {
     SimulateFlock.Init();
-    Chromosome chr_preys /* fileName */;
+    string fileName = FILEPATH_GENOME;
+    fileName += "Preys/Chromosome.csv";
+    Chromosome chr_preys(fileName);
     for (int n = 0; n < N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
@@ -76,7 +78,9 @@ void Simulation::Init_PlacePreys()
 void Simulation::Init_PlacePredators()
 {
     Predators = vector<Predator>();
-    Chromosome chr_predator /*fileName*/;
+    string fileName = FILEPATH_GENOME;
+    fileName += "Predators/Chromosome.csv";
+    Chromosome chr_predator(fileName);
     for (int n = 0; n < N_PREDATOR; n++)
     {
         long long id = -(n + 1);
