@@ -7,6 +7,8 @@ void Flock::Init()
     NumAlive = 0;
 
     //* To Add processing!! *//
+    MatDistance.clear();
+    MatDiffPos.clear();
 }
 
 void Flock::AddAgent(shared_ptr<Prey> &a)

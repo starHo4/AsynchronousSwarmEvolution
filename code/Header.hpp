@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <random>
+#include <utility>
 #include <vector>
 
 using namespace std;
@@ -26,5 +27,9 @@ using namespace std;
 
 // Include Parameters
 #include "Parameter.hpp"
+#include "PVector.hpp"
+
+typedef map<pair<long long, long long>, double> MatrixDistance;
+typedef map<pair<long long, long long>, PVector> MatrixDiffPos;
 
 #endif

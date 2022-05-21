@@ -3,7 +3,6 @@
 
 #include "Header.hpp"
 #include "Chromosome.hpp"
-#include "PVector.hpp"
 #include "Prey.hpp"
 
 class Prey;
@@ -22,8 +21,8 @@ public:
     //* Public Variables *//
     int NumAlive;
     // Distance Matrix
-    vector<vector<double>> MatDistance;
-    vector<vector<PVector>> MatDiffPos;
+    MatrixDistance MatDistance;
+    MatrixDiffPos MatDiffPos;
 
     //* Public Methods *//
     void Init();

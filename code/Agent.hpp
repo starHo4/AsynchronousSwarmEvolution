@@ -4,7 +4,6 @@
 #include "Header.hpp"
 #include "Chromosome.hpp"
 #include "RNN.hpp"
-#include "PVector.hpp"
 
 class Flock;
 
