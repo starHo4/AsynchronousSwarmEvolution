@@ -26,15 +26,22 @@ void Simulation::RunSimulation()
 
 void Simulation::TestSimulation()
 {
-    cout << "HIROYUKI HOSHI" << endl;
-    cout << (long long)10000000000 << endl;
+    vector<int> v1{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    auto rmv = remove_if(v1.begin(), v1.end(), [](int i)
+                         { return i % 2 == 1; });
+    v1.erase(rmv, v1.end());
+
+    for (int i = 0; i < v1.size(); i++)
+    {
+        cout << v1[i] << " ";
+    }
+    cout << endl;
 }
 #pragma endregion
 
 #pragma region PrivateMethods
 void Simulation::Init_PlacePreys()
 {
-    
 }
 
 void Simulation::Init_PlacePredators()

@@ -18,6 +18,13 @@ void Flock::Update()
 {
 }
 
+void Flock::RemoveDeadPreys()
+{
+    auto rmv = remove_if(flock.begin(), flock.end(), [](shared_ptr<Prey> &a)
+                         { return !a->F_live; });
+    flock.erase(rmv, flock.end());
+}
+
 void Flock::CalcDistance()
 {
     // for(int i=0; i<flock.size(); i++)

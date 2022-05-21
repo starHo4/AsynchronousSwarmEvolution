@@ -30,6 +30,7 @@ public:
     void PreFlocking(mt19937_64 &mt);
     void Flocking(mt19937_64 &mt);
     void Update();
+    void RemoveDeadPreys();
     void CalcDistance();
 };
 
