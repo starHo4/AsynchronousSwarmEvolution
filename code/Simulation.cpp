@@ -46,6 +46,14 @@ void Simulation::Init_PlacePreys()
 
 void Simulation::Init_PlacePredators()
 {
+    Predators = vector<Predator>();
+    Chromosome chr_predator/*fileName*/;
+    for (int n = 0; n < N_PREDATOR; n++)
+    {
+        long long id = -(n + 1);
+        Predator p(mt, chr_predator, id);
+        Predators.emplace_back(move(p));
+    }
 }
 
 void Simulation::PreFlocking()
