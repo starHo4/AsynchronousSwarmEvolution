@@ -30,16 +30,33 @@ void Simulation::RunSimulation()
 
 void Simulation::TestSimulation()
 {
-    vector<int> v1{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
-    auto rmv = remove_if(v1.begin(), v1.end(), [](int i)
-                         { return i % 2 == 1; });
-    v1.erase(rmv, v1.end());
+    map<ll, double> m1;
+    m1.insert(make_pair(100, 0.01));
+    m1.insert(make_pair(1000, 0.001));
+    m1.insert(make_pair(1, 1));
+    m1.insert(make_pair(10, 0.1));
 
-    for (int i = 0; i < v1.size(); i++)
+    auto itr = m1.begin();
+    auto endItr = m1.end();
+
+    for (; itr != endItr;)
     {
-        cout << v1[i] << " ";
+        if(itr->first <= 10)
+        {
+            itr = m1.erase(itr);
+        }
+        else
+        {
+            ++itr;
+        }
     }
-    cout << endl;
+
+    itr = m1.begin();
+    for(; itr != endItr; itr++)
+    {
+        cout << "key = " << itr->first << " ";
+        cout << "value = " << itr->second << endl;
+    }
 }
 #pragma endregion
 
@@ -47,8 +64,8 @@ void Simulation::TestSimulation()
 void Simulation::Init_PlacePreys()
 {
     SimulateFlock.Init();
-    Chromosome chr_preys/* fileName */;
-    for(int n=0; n<N_INIT_PREYS; n++)
+    Chromosome chr_preys /* fileName */;
+    for (int n = 0; n < N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
         SimulateFlock.AddNewPrey(p);
@@ -59,7 +76,7 @@ void Simulation::Init_PlacePreys()
 void Simulation::Init_PlacePredators()
 {
     Predators = vector<Predator>();
-    Chromosome chr_predator/*fileName*/;
+    Chromosome chr_predator /*fileName*/;
     for (int n = 0; n < N_PREDATOR; n++)
     {
         long long id = -(n + 1);
