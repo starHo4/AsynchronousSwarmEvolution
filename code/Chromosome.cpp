@@ -91,7 +91,7 @@ void Chromosome::F_ThreatMutation(mt19937_64 &mt)
     double rand = udd(mt);
     if(rand < THREAT_MUTATION_RATE)
     {
-        !F_Threat;
+        F_Threat = !F_Threat;
     }
 }
 

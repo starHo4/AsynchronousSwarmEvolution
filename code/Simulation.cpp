@@ -10,6 +10,10 @@ Simulation::Simulation(const int &_N)
     mt.seed(NewRandomSeed);
 
     INIT_TAKEENERGYRATE = (double)_N / 10;
+    if(_N < 0 || _N > 10)
+    {
+        abort();
+    }
 
     forID = 0;
 }
