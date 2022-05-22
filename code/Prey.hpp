@@ -21,8 +21,6 @@ public:
     virtual ~Prey() {}
 
     //* Public Variables *//
-    // Whether or not this prey is a threat
-    bool F_threat;
     // Energy
     double Energy;
     // For Threat

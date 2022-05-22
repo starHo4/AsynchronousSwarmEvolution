@@ -37,10 +37,21 @@ void Flock::AddNewPrey(shared_ptr<Prey> &a)
 
 void Flock::PreFlocking(mt19937_64 &mt)
 {
+    for (int i = 0; i < flock.size(); i++)
+    {
+        flock[i]->Run(mt, *this);
+    }
 }
 
 void Flock::Flocking(mt19937_64 &mt)
 {
+    for (int i = 0; i < flock.size(); i++)
+    {
+        if (flock[i]->F_live)
+        {
+            flock[i]->Run(mt, *this);
+        }
+    }
 }
 
 void Flock::Update()
@@ -56,9 +67,9 @@ void Flock::Update()
 
 void Flock::CalcEnergy(mt19937_64 &mt)
 {
-    for(int i=0; i<flock.size(); i++)
+    for (int i = 0; i < flock.size(); i++)
     {
-        if(flock[i]->F_threat)
+        if (flock[i]->F_threat)
         {
             flock[i]->RobEnergy(mt, *this);
         }
@@ -126,6 +137,7 @@ void Flock::CalcPreysDistances()
 {
     if (MatDistance.size() != MatDiffPos.size())
     {
+        cout << "MatDistance.size is not matching MatDiffPos.size" << endl;
         abort();
     }
     auto begin = MatDistance.begin();
@@ -134,17 +146,18 @@ void Flock::CalcPreysDistances()
     {
         ll firstID = itr->first.first;
         ll secondID = itr->first.second;
-        if (firstID > 0)
+        if (firstID >= 0)
         {
             CalcEachDistance(firstID, secondID);
         }
     }
 }
 
-void Flock::CalcPredatorDistances()
+void Flock::CalcPredatorDistances(const vector<Predator> &_preds)
 {
     if (MatDistance.size() != MatDiffPos.size())
     {
+        cout << "MatDistance.size is not matching MatDiffPos.size" << endl;
         abort();
     }
     auto begin = MatDistance.begin();
@@ -155,7 +168,7 @@ void Flock::CalcPredatorDistances()
         ll secondID = itr->first.second;
         if (firstID < 0)
         {
-            CalcEachDistance(firstID, secondID);
+            CalcEachPredDistance(firstID, secondID, _preds);
         }
     }
 }
@@ -168,6 +181,7 @@ void Flock::CalcEachDistance(const ll &_firstID, const ll &_secondID)
                                   { return a->ID == _secondID; });
     if (itr_firstPrey == flock.end() || itr_secondPrey == flock.end())
     {
+        cout << "ID is not found in CalcEachDistance" << endl;
         abort();
     }
 
@@ -177,5 +191,25 @@ void Flock::CalcEachDistance(const ll &_firstID, const ll &_secondID)
     double dist = diff.Norm();
     MatDistance[make_pair(_firstID, _secondID)] = dist;
     MatDiffPos[make_pair(_firstID, _secondID)] = diff;
+}
+
+void Flock::CalcEachPredDistance(const ll &_predID, const ll &_preyID, const vector<Predator> &_preds)
+{
+    auto itr_Pred = find_if(_preds.begin(), _preds.end(), [&_predID](Predator p)
+                            { return p.ID == _predID; });
+    auto itr_Prey = find_if(flock.begin(), flock.end(), [&_preyID](shared_ptr<Prey> &a)
+                            { return a->ID == _preyID; });
+    if (itr_Pred == _preds.end() || itr_Prey == flock.end())
+    {
+        cout << "ID is not found in CalcEachPredDistance" << endl;
+        abort();
+    }
+
+    Predator pred = *itr_Pred;
+    shared_ptr<Prey> prey = *itr_Prey;
+    PVector diff = pred.getPos().TroidalShortest(prey->getPos(), FIELD_W, FIELD_H);
+    double dist = diff.Norm();
+    MatDistance[make_pair(_predID, _preyID)] = dist;
+    MatDiffPos[make_pair(_predID, _preyID)] = diff;
 }
 #pragma endregion

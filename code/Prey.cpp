@@ -70,10 +70,10 @@ void Prey::Detect(const Flock &f)
     NearestDistance = 100000000;
     for (int i = 0; i < f.flock.size(); i++)
     {
-        if (f.flock[i]->F_live)
+        ll firstID = ID;
+        ll secondID = f.flock[i]->ID;
+        if (f.flock[i]->F_live && firstID != secondID)
         {
-            ll firstID = ID;
-            ll secondID = f.flock[i]->ID;
             bool swaped = false;
             if (firstID > secondID)
             {

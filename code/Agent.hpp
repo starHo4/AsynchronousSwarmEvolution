@@ -43,6 +43,8 @@ public:
     long long ID;
     bool F_live;
     bool F_predator;
+    // Whether or not this prey is a threat
+    bool F_threat;
 
     //* Public Methods *//
     virtual void Run(mt19937_64 &mt, Flock &f);

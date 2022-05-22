@@ -2,6 +2,7 @@
 #define __Simulation__
 
 #include "Header.hpp"
+#include "DataManager.hpp"
 #include "Flock.hpp"
 #include "Predator.hpp"
 
@@ -22,6 +23,8 @@ private:
     Flock SimulateFlock;
     // Flock of predators
     vector<Predator> Predators;
+
+    DataManager DManager;
 
     //* Priavte Methods *//
     // Initialization

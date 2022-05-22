@@ -41,6 +41,7 @@ Chromosome::Chromosome(const string &fileName, const bool &_Fpredator)
 
     if(i != size)
     {
+        cout << "Size is not matching" << endl;
         abort();
     }
 

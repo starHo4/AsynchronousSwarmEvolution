@@ -10,7 +10,7 @@ Simulation::Simulation(const int &_N)
     mt.seed(NewRandomSeed);
 
     INIT_TAKEENERGYRATE = (double)_N / 10;
-    if(_N < 0 || _N > 10)
+    if (_N < 0 || _N > 10)
     {
         abort();
     }
@@ -38,7 +38,25 @@ void Simulation::RunSimulation()
 void Simulation::TestSimulation()
 {
     Init_PlacePreys();
+    PreFlocking();
     Init_PlacePredators();
+
+    for (int t = 0; t < 1000; t++)
+    {
+        SimulateFlock.Flocking(mt);
+        SimulateFlock.Update();
+        SimulateFlock.CalcEnergy(mt);
+        SimulateFlock.RemoveDeadPreys();
+        SimulateFlock.CalcPreysDistances();
+
+        PredatorsRun(mt);
+        PredatorsUpdate();
+        PredatorsPredation(mt);
+        SimulateFlock.RemoveDeadPreys();
+        SimulateFlock.CalcPredatorDistances(Predators);
+
+        DManager.SaveFlock_Timestep(INIT_TAKEENERGYRATE, t, SimulateFlock, Predators);
+    }
 }
 #pragma endregion
 
@@ -72,39 +90,48 @@ void Simulation::Init_PlacePredators()
         long long id = -(n + 1);
         Predator p(mt, chr_predator, id);
         Predators.emplace_back(move(p));
+
+        for (int i = 0; i < SimulateFlock.flock.size(); i++)
+        {
+            ll pID = SimulateFlock.flock[i]->ID;
+            SimulateFlock.MatDistance.insert(make_pair(make_pair(id, pID), 0));
+            SimulateFlock.MatDiffPos.insert(make_pair(make_pair(id, pID), PVector(0, 0)));
+        }
     }
 }
 
 void Simulation::PreFlocking()
 {
     SimulateFlock.PreFlocking(mt);
+    SimulateFlock.Update();
+    SimulateFlock.CalcPreysDistances();
 }
 
 void Simulation::MainLoop()
 {
     for (int t = 0; t < MAX_TIMESTEPS; t++)
     {
-        #pragma region InteractionPreys
+#pragma region InteractionPreys
         SimulateFlock.Flocking(mt);
         SimulateFlock.Update();
         SimulateFlock.CalcEnergy(mt);
         SimulateFlock.RemoveDeadPreys();
         SimulateFlock.CalcPreysDistances();
-        #pragma endregion InteractionPreys
+#pragma endregion InteractionPreys
 
-        #pragma region PredatorsAttack
+#pragma region PredatorsAttack
         PredatorsRun(mt);
         PredatorsUpdate();
         PredatorsPredation(mt);
         SimulateFlock.RemoveDeadPreys();
-        SimulateFlock.CalcPredatorDistances();
-        #pragma endregion PredatorsAttack
+        SimulateFlock.CalcPredatorDistances(Predators);
+#pragma endregion PredatorsAttack
     }
 }
 
 void Simulation::PredatorsRun(mt19937_64 &mt)
 {
-    for(int i=0; i<Predators.size(); i++)
+    for (int i = 0; i < Predators.size(); i++)
     {
         Predators[i].Run(mt, SimulateFlock);
     }
@@ -112,7 +139,7 @@ void Simulation::PredatorsRun(mt19937_64 &mt)
 
 void Simulation::PredatorsUpdate()
 {
-    for(int i=0; i<Predators.size();i++)
+    for (int i = 0; i < Predators.size(); i++)
     {
         Predators[i].Update();
     }
@@ -120,7 +147,7 @@ void Simulation::PredatorsUpdate()
 
 void Simulation::PredatorsPredation(mt19937_64 &mt)
 {
-    for(int i=0; i<Predators.size(); i++)
+    for (int i = 0; i < Predators.size(); i++)
     {
         Predators[i].TryPredation(mt, SimulateFlock);
     }

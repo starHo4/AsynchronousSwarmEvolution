@@ -2,8 +2,8 @@
 #define __Parameter__
 
 // The const. for simulation
-#define FIELD_W 1024
-#define FIELD_H 1024
+#define FIELD_W 512
+#define FIELD_H 512
 #define FREE_TIMESTEPS 1000
 #define MAX_TIMESTEPS 1000000 // 1 M
 
@@ -19,7 +19,7 @@
 #define EACH_SEGMENT_ANGLE 15 // degree
 
 // Parameters for preys
-#define N_INIT_PREYS 200
+#define N_INIT_PREYS 50
 #define INIT_MEAN_ENERGY 2000.0
 #define INIT_STD_ENERGY 100.0
 #define RADIUS_PREY 100

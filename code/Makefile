@@ -1,4 +1,4 @@
-OBJS = main.o Agent.o Chromosome.o Flock.o Neuron.o Predator.o Prey.o PreyThreat.o PVector.o RNN.o Simulation.o
+OBJS = main.o Agent.o Chromosome.o DataManager.o Flock.o Neuron.o Predator.o Prey.o PreyThreat.o PVector.o RNN.o Simulation.o
 CC = g++
 STD = -std=c++17
 
@@ -12,6 +12,8 @@ Agent.o : Agent.cpp
 	$(CC) $(STD) -g -c Agent.cpp
 Chromosome.o : Chromosome.cpp
 	$(CC) $(STD) -g -c Chromosome.cpp
+DataManager.o : DataManager.cpp	
+	$(CC) $(STD) -g -c DataManager.cpp
 Flock.o : Flock.cpp
 	$(CC) $(STD) -g -c Flock.cpp
 Neuron.o : Neuron.cpp

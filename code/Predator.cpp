@@ -116,6 +116,7 @@ void Predator::TryPredation(mt19937_64 &mt, Flock &f)
                     {
                         killed = true;
                         f.flock[i]->F_live = false;
+                        cout << "eat!" << endl;
                     }
 
                     Delay = KILL_DELAY;

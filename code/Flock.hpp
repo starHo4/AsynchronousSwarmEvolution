@@ -3,9 +3,11 @@
 
 #include "Header.hpp"
 #include "Chromosome.hpp"
+#include "Predator.hpp"
 #include "Prey.hpp"
 
 class Prey;
+class Predator;
 
 class Flock
 {
@@ -34,8 +36,9 @@ public:
     void CalcEnergy(mt19937_64 &mt);
     void RemoveDeadPreys();
     void CalcPreysDistances();
-    void CalcPredatorDistances();
+    void CalcPredatorDistances(const vector<Predator> &_preds);
     void CalcEachDistance(const ll &_firstID, const ll &_secondID);
+    void CalcEachPredDistance(const ll &_predID, const ll &_preyID, const vector<Predator> &_preds);
 };
 
 #endif
