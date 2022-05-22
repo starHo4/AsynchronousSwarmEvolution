@@ -8,6 +8,8 @@ class Chromosome
 private:
     //* Private Methods *//
     void GeneMutation(mt19937_64 &mt);
+    void F_ThreatMutation(mt19937_64 &mt);
+    void TakeEnergyRate_Mutation(mt19937_64 &mt);
 
 public:
     //* Constructors *//

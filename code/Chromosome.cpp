@@ -57,6 +57,8 @@ void Chromosome::InitTakeEnergyRate(const double &_val)
 void Chromosome::Mutation(mt19937_64 &mt)
 {
     GeneMutation(mt);
+    F_ThreatMutation(mt);
+    TakeEnergyRate_Mutation(mt);
 }
 #pragma endregion
 
@@ -71,14 +73,43 @@ void Chromosome::GeneMutation(mt19937_64 &mt)
         if(rand < GENE_MUTATION_RATE)
         {
             Genotype[i] += nd_mutation(mt);
-            if(Genotype[i] > 1)
+            if(Genotype[i] > 1.0)
             {
                 Genotype[i] = 1.0;
             }
-            if(Genotype[i] < -1)
+            if(Genotype[i] < -1.0)
             {
                 Genotype[i] = -1.0;
             }
+        }
+    }
+}
+
+void Chromosome::F_ThreatMutation(mt19937_64 &mt)
+{
+    uniform_real_distribution<double> udd(0, 1);
+    double rand = udd(mt);
+    if(rand < THREAT_MUTATION_RATE)
+    {
+        !F_Threat;
+    }
+}
+
+void Chromosome::TakeEnergyRate_Mutation(mt19937_64 &mt)
+{
+    uniform_real_distribution<double> udd(0, 1);
+    normal_distribution<double> nd_mutation(0, TAKEENERGYRATE_MUTATION_STD);
+    double rand = udd(mt);
+    if(rand < TAKEENERGYRATE_MUTATION_RATE)
+    {
+        TakeEnergyRate += nd_mutation(mt);
+        if(TakeEnergyRate > 1.0)
+        {
+            TakeEnergyRate = 1.0;
+        }
+        if(TakeEnergyRate < 0.0)
+        {
+            TakeEnergyRate = 0.0;
         }
     }
 }
