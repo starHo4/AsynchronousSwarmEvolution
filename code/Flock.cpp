@@ -98,12 +98,11 @@ void Flock::RemoveDeadPreys()
     // Remove distances related to the dead preys
     for (int i = 0; i < rmvID.size(); i++)
     {
-
         auto itr = MatDistance.begin();
         auto endItr = MatDistance.end();
         for (; itr != endItr;)
         {
-            if (itr->first.first == rmvID[i])
+            if (itr->first.first == rmvID[i] || itr->first.second == rmvID[i])
             {
                 itr = MatDistance.erase(itr);
             }
@@ -121,7 +120,7 @@ void Flock::RemoveDeadPreys()
         auto endItr = MatDiffPos.end();
         for (; itr != endItr;)
         {
-            if (itr->first.first == rmvID[i])
+            if (itr->first.first == rmvID[i] || itr->first.second == rmvID[i])
             {
                 itr = MatDiffPos.erase(itr);
             }

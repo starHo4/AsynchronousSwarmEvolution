@@ -3,13 +3,24 @@ int FlockSize = 201;
 int HeaderNum = 9;
 
 Agent[] flock = new Agent[FlockSize];
-double[][][] Data_timestep = new double[TimeSteps][FlockSize][HeaderNum];
+double[][][] Data_timestep = new double[TimeSteps + 1][FlockSize][HeaderNum];
 
 void setup()
 {
-    size(1024, 1024);
+    size(512, 512);
     
     // Init Data_timestep
+    for (int i = 0; i < TimeSteps + 1; i++)
+    {
+        for (int j = 0; j < FlockSize; j++)
+        {
+            for (int k = 0; k < HeaderNum; k++)
+            {
+                Data_timestep[i][j][k] = -1024;
+            }
+        }
+    }
+
     readData();
     
     // Init flock
@@ -36,16 +47,18 @@ void draw()
 void readData()
 {    
     // Read Pos, Vel, and angle of Flock in each time step
-    for (int i = 1; i <=  TimeSteps; i++)
+    for (int i = 0; i < TimeSteps; i++)
     {
-        String filename_timestep = "../../data/N0/forMovie/ts" + str(i) + ".csv";
+        String filename_timestep = "../../data/N0/forMovie/ts" + str(i + 1) + ".csv";
         Table tbl_timestep = loadTable(filename_timestep, "header");
         
-        for (int j = 0; j < FlockSize; j++)
+        int rowNum = tbl_timestep.getRowCount();
+        
+        for (int j = 0; j < rowNum; j++)
         {
             for (int k = 0; k < HeaderNum; k++)
             {
-                Data_timestep[i-1][j][k] = tbl_timestep.getDouble(j, k);
+                Data_timestep[i][j][k] = tbl_timestep.getDouble(j, k);
             }
         }
     }
@@ -56,6 +69,13 @@ void drawFlock()
     for (int i = 0; i < FlockSize; i++)
     {
         double[] each_Data = new double[HeaderNum];
+
+        if(Data_timestep[frameCount][i][0] < -1000)
+        {
+            continue;
+        }
+
+        println("hoshi");
         for (int j = 0; j < HeaderNum; j++)
         {
             each_Data[j] = Data_timestep[frameCount][i][j];

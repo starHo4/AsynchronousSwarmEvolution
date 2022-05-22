@@ -104,6 +104,7 @@ void Prey::Detect(const Flock &f)
                     else if (JudgeThreat(f.flock[i]->ID))
                     /* The case of detecting found preyThreats */
                     {
+                        cout << "hoshi" << endl;
                         Brain.State[(int)((bAngle + VisionAngle / 2) / ((double)EACH_SEGMENT_ANGLE / 180 * PI)) + (N_SENSOR_LAYER_PREY - 2) * N_SENSOR] = 1;
                     }
                     else

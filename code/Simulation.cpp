@@ -102,9 +102,12 @@ void Simulation::Init_PlacePredators()
 
 void Simulation::PreFlocking()
 {
-    SimulateFlock.PreFlocking(mt);
-    SimulateFlock.Update();
-    SimulateFlock.CalcPreysDistances();
+    for (int t = 0; t < FREE_TIMESTEPS; t++)
+    {
+        SimulateFlock.PreFlocking(mt);
+        SimulateFlock.Update();
+        SimulateFlock.CalcPreysDistances();
+    }
 }
 
 void Simulation::MainLoop()

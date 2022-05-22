@@ -8,8 +8,8 @@ RNN::RNN(const vector<double> &_genotype, const int &_NSensor, const int &_NHidd
     NOutput = _NOutput;
 
     // Init State
-    State = vector<int>(NSensor + NHidden + N_ACTUATOR, 0);
-    NewState = vector<int>(NSensor + NHidden + N_ACTUATOR, 0);
+    State = vector<int>(NSensor + NHidden + NOutput, 0);
+    NewState = vector<int>(NSensor + NHidden + NOutput, 0);
 
     // Init Hidden and Output Neurons
     HiddenNeurons.resize(NHidden);
@@ -43,11 +43,11 @@ void RNN::FeedForward()
 {
     for (int i = 0; i < HiddenNeurons.size(); i++)
     {
-        for (int j = 0; j < HiddenNeurons[i].Weights.size(); j++)
+        for (int j = 0; j < HiddenNeurons[i].Weights.size() - 1; j++)
         {
             HiddenNeurons[i].NetValue += HiddenNeurons[i].Weights[j] * State[j];
         }
-        HiddenNeurons[i].NetValue += HiddenNeurons[i].Weights[HiddenNeurons[i].Weights.size() - 1]; // Bias //
+        HiddenNeurons[i].NetValue += HiddenNeurons[i].Weights[HiddenNeurons[i].Weights.size() - 1]; /* bias */
         HiddenNeurons[i].F();
         NewState[NSensor + i] = HiddenNeurons[i].OutValue;
     }
@@ -58,7 +58,7 @@ void RNN::FeedForward()
         {
             OutputNeurons[i].NetValue += OutputNeurons[i].Weights[j] * NewState[NSensor + j];
         }
-        OutputNeurons[i].NetValue += OutputNeurons[i].Weights[OutputNeurons[i].Weights.size() - 1]; // Bias //
+        OutputNeurons[i].NetValue += OutputNeurons[i].Weights[OutputNeurons[i].Weights.size() - 1]; /* bias */
         OutputNeurons[i].F();
         NewState[NSensor + NHidden + i] = OutputNeurons[i].OutValue;
     }

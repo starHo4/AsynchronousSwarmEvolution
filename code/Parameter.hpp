@@ -4,7 +4,7 @@
 // The const. for simulation
 #define FIELD_W 512
 #define FIELD_H 512
-#define FREE_TIMESTEPS 1000
+#define FREE_TIMESTEPS 250
 #define MAX_TIMESTEPS 1000000 // 1 M
 
 // Parameters for GA
