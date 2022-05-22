@@ -64,7 +64,7 @@ void RNN::FeedForward()
     }
     ClearNeuronValues();
 
-    // Update State from NewState & Clear NewState
+    // Update States from NewState & Clear NewState
     for (int i = NSensor; i < State.size(); i++)
     {
         State[i] = NewState[i];
