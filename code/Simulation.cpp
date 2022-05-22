@@ -30,11 +30,8 @@ void Simulation::RunSimulation()
 
 void Simulation::TestSimulation()
 {
-    cout << "hoshi" << endl;
     Init_PlacePreys();
-    cout << "hoshi" << endl;
     Init_PlacePredators();
-    cout << "hoshi" << endl;
 }
 #pragma endregion
 

@@ -4,6 +4,7 @@
 Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id) : Agent::Agent(mt, _chr, _id)
 {
     F_predator = false;
+    F_threat = false;
 
     uniform_real_distribution<double> udd_X(0.6 * -FIELD_W / 2, 0.6 * FIELD_W / 2);
     uniform_real_distribution<double> udd_Y(0.6 * -FIELD_H / 2, 0.6 * FIELD_H / 2);
