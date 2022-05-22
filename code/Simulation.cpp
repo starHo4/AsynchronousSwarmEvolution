@@ -3,11 +3,13 @@
 #pragma region Constructors
 Simulation::Simulation(const int &_N)
 {
-    generalSeed = _N;
-    mt.seed(_N);
+    generalSeed = 0;
+    mt.seed(generalSeed);
     uniform_int_distribution<int> uid_Seed(0, INT32_MAX);
     int NewRandomSeed = uid_Seed(mt);
     mt.seed(NewRandomSeed);
+
+    INIT_TAKEENERGYRATE = (double)_N / 10;
 
     forID = 0;
 }

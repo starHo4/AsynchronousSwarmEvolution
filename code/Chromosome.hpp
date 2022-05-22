@@ -17,9 +17,15 @@ public:
     //* Destructor *//
     ~Chromosome() {}
 
+    //* Main body *//
+    // For RNN
     vector<double> Genotype;
+    // For Threat
+    bool F_Threat;
+    double TakeEnergyRate;  // Initial value is parameter
 
     //* Public Methods *//
+    void InitTakeEnergyRate(const double &_val);
     void Mutation(mt19937_64 &mt);
 };
 

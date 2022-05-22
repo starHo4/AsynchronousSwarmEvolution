@@ -43,10 +43,17 @@ Chromosome::Chromosome(const string &fileName, const bool &_Fpredator)
     {
         abort();
     }
+
+    F_Threat = false;
 }
 #pragma endregion
 
 #pragma region PublicMethods
+void Chromosome::InitTakeEnergyRate(const double &_val)
+{
+    TakeEnergyRate = _val;
+}
+
 void Chromosome::Mutation(mt19937_64 &mt)
 {
     GeneMutation(mt);
@@ -64,6 +71,14 @@ void Chromosome::GeneMutation(mt19937_64 &mt)
         if(rand < GENE_MUTATION_RATE)
         {
             Genotype[i] += nd_mutation(mt);
+            if(Genotype[i] > 1)
+            {
+                Genotype[i] = 1.0;
+            }
+            if(Genotype[i] < -1)
+            {
+                Genotype[i] = -1.0;
+            }
         }
     }
 }

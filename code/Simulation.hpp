@@ -13,6 +13,9 @@ private:
     mt19937_64 mt;
     int generalSeed;
 
+    //* For Paramter Search *//
+    double INIT_TAKEENERGYRATE;
+
     // For Iteration of ID
     long long forID;
     // Flock of preys
