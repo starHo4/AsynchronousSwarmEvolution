@@ -13,7 +13,7 @@ void Flock::Init()
 
 void Flock::AddNewPrey(shared_ptr<Prey> &a)
 {
-    flock.emplace_back(move(a));
+    flock.emplace_back(a);
     NumAlive++;
 
     // Add new distances and differences of Pos between "a" and others
@@ -32,6 +32,7 @@ void Flock::AddNewPrey(shared_ptr<Prey> &a)
             CalcEachDistance(firstID, secondID);
         }
     }
+    a.reset();
 }
 
 void Flock::PreFlocking(mt19937_64 &mt)
