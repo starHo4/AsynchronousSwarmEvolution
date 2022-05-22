@@ -60,6 +60,6 @@ void PreyThreat::RobEnergy(mt19937_64 &mt, Flock &f)
                           { return p->ID == TargetID; });
     size_t index = distance(f.flock.begin(), target);
     f.flock[index]->Energy -= (TakeEnergyRate * INIT_MEAN_ENERGY);
-    f.flock[index]->CandThreat.push_back(ID);
+    f.flock[index]->ListOfThreat.push_back(ID);
 }
 #pragma endregion

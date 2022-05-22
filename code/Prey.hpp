@@ -27,7 +27,6 @@ public:
     // Energy
     double Energy;
     // For Threat
-    vector<ll> CandThreat;
     vector<ll> ListOfThreat;
     // For Measures
     int NearbyCount;

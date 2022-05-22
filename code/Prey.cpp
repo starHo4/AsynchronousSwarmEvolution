@@ -25,7 +25,6 @@ Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id) : Agent::Agent
     normal_distribution<double> nd_energy(INIT_MEAN_ENERGY, INIT_STD_ENERGY);
     Energy = nd_energy(mt);
     // Init for Threat
-    CandThreat = vector<ll>();
     ListOfThreat = vector<ll>();
 }
 #pragma endregion Constructor
