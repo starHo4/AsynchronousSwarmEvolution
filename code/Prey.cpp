@@ -20,6 +20,13 @@ Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id) : Agent::Agent
 
     // Init Brain
     Brain = RNN(_chr.Genotype, N_SENSOR_LAYER_PREY * N_SENSOR, N_MEMORY, N_ACTUATOR);
+
+    // Init Energy
+    normal_distribution<double> nd_energy(INIT_MEAN_ENERGY, INIT_STD_ENERGY);
+    Energy = nd_energy(mt);
+    // Init for Threat
+    CandThreat = vector<ll>();
+    ListOfThreat = vector<ll>();
 }
 #pragma endregion Constructor
 
@@ -79,6 +86,11 @@ void Prey::Detect(const Flock &f)
                     {
                         Brain.State[(int)((bAngle + VisionAngle / 2) / ((double)EACH_SEGMENT_ANGLE / 180 * PI))] = 1;
                     }
+                    else if(JudgeThreat(f.flock[i]->ID))
+                    /* The case of detecting found preyThreats */
+                    {
+                        Brain.State[(int)((bAngle + VisionAngle / 2) / ((double)EACH_SEGMENT_ANGLE / 180 * PI)) + (N_SENSOR_LAYER_PREY - 2) * N_SENSOR] = 1;
+                    }
                     else
                     /* The case of detecting the predator */
                     {
@@ -88,6 +100,18 @@ void Prey::Detect(const Flock &f)
             }
         }
     }
+}
+
+bool Prey::JudgeThreat(const ll &_detectID)
+{
+    for (int i = 0; i < ListOfThreat.size(); i++)
+    {
+        if (_detectID == ListOfThreat[i])
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Prey::CheckDead()

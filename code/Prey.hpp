@@ -11,6 +11,7 @@ private:
 protected:
     //* Protected Methods *//
     virtual void Detect(const Flock &f);
+    bool JudgeThreat(const ll &_detectID);
     void CheckDead();
 
 public:
@@ -25,6 +26,9 @@ public:
     bool F_threat;
     // Energy
     double Energy;
+    // For Threat
+    vector<ll> CandThreat;
+    vector<ll> ListOfThreat;
     // For Measures
     int NearbyCount;
     int NearestDistance;
