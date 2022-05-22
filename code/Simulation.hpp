@@ -29,6 +29,8 @@ private:
     void Init_PlacePredators();
     // Free running for preys
     void PreFlocking();
+    // Main Loop
+    void MainLoop();
 
 public:
     //* Constructor & Destructor *//

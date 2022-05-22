@@ -28,6 +28,7 @@ void Simulation::RunSimulation()
     Init_PlacePredators();
 
     // Main Loop
+    MainLoop();
 }
 
 void Simulation::TestSimulation()
@@ -45,6 +46,8 @@ void Simulation::Init_PlacePreys()
     filePath += FILEPATH_GENOME;
     filePath += "Preys/Chromosome.csv";
     Chromosome chr_preys(filePath.string(), false);
+    chr_preys.InitTakeEnergyRate(INIT_TAKEENERGYRATE);
+    cout << chr_preys.TakeEnergyRate << endl;
     for (int n = 0; n < N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
@@ -70,5 +73,13 @@ void Simulation::Init_PlacePredators()
 
 void Simulation::PreFlocking()
 {
+    SimulateFlock.PreFlocking(mt);
+}
+
+void Simulation::MainLoop()
+{
+    for (int t = 0; t < MAX_TIMESTEPS; t++)
+    {
+    }
 }
 #pragma endregion
