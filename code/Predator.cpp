@@ -39,9 +39,6 @@ void Predator::Run(mt19937_64 &mt, Flock &f)
              ((Brain.State[Brain.State.size() - 2] & 1));
     TakeAction(Action);
 
-    // Try to predate a target prey
-    TryPredation(mt, f);
-
     Vel.Normalize();
     if (Vel != PVector(0, 0))
     {
@@ -119,7 +116,6 @@ void Predator::TryPredation(mt19937_64 &mt, Flock &f)
                     {
                         killed = true;
                         f.flock[i]->F_live = false;
-                        f.NumAlive--;
                     }
 
                     Delay = KILL_DELAY;

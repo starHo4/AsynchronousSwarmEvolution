@@ -17,18 +17,13 @@ void PreyThreat::Run(mt19937_64 &mt, Flock &f)
              ((Brain.State[Brain.State.size() - 2] & 1));
     TakeAction(Action);
 
-    // Rob Energy
-    RobEnergy(mt, f);
-
     Vel.Normalize();
     if (Vel != PVector(0, 0))
     {
         Angle = atan2(Vel.y, Vel.x);
     }
 }
-#pragma endregion PublicMethods
 
-#pragma region PrivateMethods
 void PreyThreat::RobEnergy(mt19937_64 &mt, Flock &f)
 {
     vector<ll> CandOfTarget = vector<ll>();
@@ -62,4 +57,4 @@ void PreyThreat::RobEnergy(mt19937_64 &mt, Flock &f)
     f.flock[index]->Energy -= (TakeEnergyRate * INIT_MEAN_ENERGY);
     f.flock[index]->ListOfThreat.push_back(ID);
 }
-#pragma endregion
+#pragma endregion PublicMethods

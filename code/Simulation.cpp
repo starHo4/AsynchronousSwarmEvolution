@@ -84,6 +84,45 @@ void Simulation::MainLoop()
 {
     for (int t = 0; t < MAX_TIMESTEPS; t++)
     {
+        #pragma region InteractionPreys
+        SimulateFlock.Flocking(mt);
+        SimulateFlock.Update();
+        SimulateFlock.CalcEnergy(mt);
+        SimulateFlock.RemoveDeadPreys();
+        SimulateFlock.CalcPreysDistances();
+        #pragma endregion InteractionPreys
+
+        #pragma region PredatorsAttack
+        PredatorsRun(mt);
+        PredatorsUpdate();
+        PredatorsPredation(mt);
+        SimulateFlock.RemoveDeadPreys();
+        SimulateFlock.CalcPredatorDistances();
+        #pragma endregion PredatorsAttack
+    }
+}
+
+void Simulation::PredatorsRun(mt19937_64 &mt)
+{
+    for(int i=0; i<Predators.size(); i++)
+    {
+        Predators[i].Run(mt, SimulateFlock);
+    }
+}
+
+void Simulation::PredatorsUpdate()
+{
+    for(int i=0; i<Predators.size();i++)
+    {
+        Predators[i].Update();
+    }
+}
+
+void Simulation::PredatorsPredation(mt19937_64 &mt)
+{
+    for(int i=0; i<Predators.size(); i++)
+    {
+        Predators[i].TryPredation(mt, SimulateFlock);
     }
 }
 #pragma endregion

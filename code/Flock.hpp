@@ -28,10 +28,13 @@ public:
     void Init();
     void AddNewPrey(shared_ptr<Prey> &a);
     void PreFlocking(mt19937_64 &mt);
+    // Interaction between preys
     void Flocking(mt19937_64 &mt);
     void Update();
+    void CalcEnergy(mt19937_64 &mt);
     void RemoveDeadPreys();
-    void CalcAllDistances();
+    void CalcPreysDistances();
+    void CalcPredatorDistances();
     void CalcEachDistance(const ll &_firstID, const ll &_secondID);
 };
 

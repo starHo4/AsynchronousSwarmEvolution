@@ -12,7 +12,6 @@ protected:
     //* Protected Methods *//
     virtual void Detect(const Flock &f);
     bool JudgeThreat(const ll &_detectID);
-    void CheckDead();
 
 public:
     //* Constructors *//
@@ -34,6 +33,8 @@ public:
 
     //* Public Methods *//
     virtual void Run(mt19937_64 &mt, Flock &f);
+    virtual void RobEnergy(mt19937_64 &mt, Flock &f);
+    void CheckDead();
 };
 
 #endif

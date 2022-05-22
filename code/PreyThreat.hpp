@@ -8,9 +8,6 @@
 class PreyThreat : public Prey
 {
 private:
-    //* Private Methods *//
-    void RobEnergy(mt19937_64 &mt, Flock &f);
-
 public:
     //* Constructors *//
     PreyThreat() {}
@@ -23,6 +20,7 @@ public:
 
     //* Public Methods *//
     virtual void Run(mt19937_64 &mt, Flock &f);
+    virtual void RobEnergy(mt19937_64 &mt, Flock &f);
 };
 
 #endif

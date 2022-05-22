@@ -24,6 +24,10 @@ Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id) : Agent::Agent
     // Init Energy
     normal_distribution<double> nd_energy(INIT_MEAN_ENERGY, INIT_STD_ENERGY);
     Energy = nd_energy(mt);
+    if (Energy < 0)
+    {
+        Energy = 1;
+    }
     // Init for Threat
     ListOfThreat = vector<ll>();
 }
@@ -42,6 +46,18 @@ void Prey::Run(mt19937_64 &mt, Flock &f)
     if (Vel != PVector(0, 0))
     {
         Angle = atan2(Vel.y, Vel.x);
+    }
+}
+
+void Prey::RobEnergy(mt19937_64 &mt, Flock &f)
+{
+}
+
+void Prey::CheckDead()
+{
+    if (Energy < 0)
+    {
+        F_live = false;
     }
 }
 #pragma endregion
@@ -85,7 +101,7 @@ void Prey::Detect(const Flock &f)
                     {
                         Brain.State[(int)((bAngle + VisionAngle / 2) / ((double)EACH_SEGMENT_ANGLE / 180 * PI))] = 1;
                     }
-                    else if(JudgeThreat(f.flock[i]->ID))
+                    else if (JudgeThreat(f.flock[i]->ID))
                     /* The case of detecting found preyThreats */
                     {
                         Brain.State[(int)((bAngle + VisionAngle / 2) / ((double)EACH_SEGMENT_ANGLE / 180 * PI)) + (N_SENSOR_LAYER_PREY - 2) * N_SENSOR] = 1;
@@ -111,13 +127,5 @@ bool Prey::JudgeThreat(const ll &_detectID)
         }
     }
     return false;
-}
-
-void Prey::CheckDead()
-{
-    if (Energy < 0)
-    {
-        F_live = false;
-    }
 }
 #pragma endregion ProtectedMethods

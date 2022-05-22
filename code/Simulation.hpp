@@ -31,6 +31,10 @@ private:
     void PreFlocking();
     // Main Loop
     void MainLoop();
+    // Predator's Update
+    void PredatorsRun(mt19937_64 &mt);
+    void PredatorsUpdate();
+    void PredatorsPredation(mt19937_64 &mt);
 
 public:
     //* Constructor & Destructor *//

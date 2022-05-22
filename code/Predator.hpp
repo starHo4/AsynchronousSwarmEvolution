@@ -17,7 +17,6 @@ private:
 
     //* Private Methods *//
     virtual void Detect(const Flock &f);
-    void TryPredation(mt19937_64 &mt, Flock &f);
 
 public:
     //* Constructors *//
@@ -28,6 +27,7 @@ public:
 
     //* Public Methods *//
     virtual void Run(mt19937_64 &mt, Flock &f);
+    void TryPredation(mt19937_64 &mt, Flock &f);
 };
 
 #endif

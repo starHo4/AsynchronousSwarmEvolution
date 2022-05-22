@@ -54,12 +54,24 @@ void Flock::Update()
     }
 }
 
+void Flock::CalcEnergy(mt19937_64 &mt)
+{
+    for(int i=0; i<flock.size(); i++)
+    {
+        if(flock[i]->F_threat)
+        {
+            flock[i]->RobEnergy(mt, *this);
+        }
+    }
+}
+
 void Flock::RemoveDeadPreys()
 {
     // Extract ID for removing dead preys
     vector<ll> rmvID = vector<ll>();
     for (int i = 0; i < flock.size(); i++)
     {
+        flock[i]->CheckDead();
         if (!flock[i]->F_live)
         {
             rmvID.push_back(flock[i]->ID);
@@ -70,6 +82,7 @@ void Flock::RemoveDeadPreys()
     auto rmv = remove_if(flock.begin(), flock.end(), [](shared_ptr<Prey> &a)
                          { return !a->F_live; });
     flock.erase(rmv, flock.end());
+    NumAlive = flock.size();
 
     // Remove distances related to the dead preys
     for (int i = 0; i < rmvID.size(); i++)
@@ -109,19 +122,41 @@ void Flock::RemoveDeadPreys()
     }
 }
 
-void Flock::CalcAllDistances()
+void Flock::CalcPreysDistances()
 {
-    if(MatDistance.size() != MatDiffPos.size())
+    if (MatDistance.size() != MatDiffPos.size())
     {
         abort();
     }
     auto begin = MatDistance.begin();
     auto end = MatDistance.end();
-    for(auto itr = begin; itr != end; itr++)
+    for (auto itr = begin; itr != end; itr++)
     {
         ll firstID = itr->first.first;
         ll secondID = itr->first.second;
-        CalcEachDistance(firstID, secondID);
+        if (firstID > 0)
+        {
+            CalcEachDistance(firstID, secondID);
+        }
+    }
+}
+
+void Flock::CalcPredatorDistances()
+{
+    if (MatDistance.size() != MatDiffPos.size())
+    {
+        abort();
+    }
+    auto begin = MatDistance.begin();
+    auto end = MatDistance.end();
+    for (auto itr = begin; itr != end; itr++)
+    {
+        ll firstID = itr->first.first;
+        ll secondID = itr->first.second;
+        if (firstID < 0)
+        {
+            CalcEachDistance(firstID, secondID);
+        }
     }
 }
 
