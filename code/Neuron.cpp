@@ -9,7 +9,7 @@ Neuron::Neuron(const vector<double> &_genotype, const int &_startIndex, const in
 
     // Init Weights
     Weights.resize(_NOfPreLayer);
-    for(int i=0; i<Weights.size(); i++)
+    for (int i = 0; i < Weights.size(); i++)
     {
         Weights[i] = _genotype[_startIndex + i];
     }
