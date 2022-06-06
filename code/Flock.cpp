@@ -186,7 +186,7 @@ void Flock::CalcEachDistance(const ll &_firstID, const ll &_secondID)
 
     shared_ptr<Prey> firstPrey = *itr_firstPrey;
     shared_ptr<Prey> secondPrey = *itr_secondPrey;
-    PVector diff = firstPrey->getPos().TroidalShortest(secondPrey->getPos(), FIELD_W, FIELD_H);
+    PVector diff = secondPrey->getPos().TroidalShortest(firstPrey->getPos(), FIELD_W, FIELD_H);
     double dist = diff.Norm();
     MatDistance[make_pair(_firstID, _secondID)] = dist;
     MatDiffPos[make_pair(_firstID, _secondID)] = diff;
@@ -206,7 +206,7 @@ void Flock::CalcEachPredDistance(const ll &_predID, const ll &_preyID, const vec
 
     Predator pred = *itr_Pred;
     shared_ptr<Prey> prey = *itr_Prey;
-    PVector diff = pred.getPos().TroidalShortest(prey->getPos(), FIELD_W, FIELD_H);
+    PVector diff = prey->getPos().TroidalShortest(pred.getPos(), FIELD_W, FIELD_H);
     double dist = diff.Norm();
     MatDistance[make_pair(_predID, _preyID)] = dist;
     MatDiffPos[make_pair(_predID, _preyID)] = diff;

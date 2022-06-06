@@ -57,6 +57,16 @@ void Simulation::TestSimulation()
 
         DManager.SaveFlock_Timestep(INIT_TAKEENERGYRATE, t, SimulateFlock, Predators);
     }
+
+    // filesystem::path filePath = filesystem::current_path();
+    // filePath += FILEPATH;
+    // filePath += "test.csv";
+    // double a = 1.23456789101112131;
+    // ofstream ofs(filePath.string(), ios::app);
+    // ofs << fixed << endl;
+    // ofs << setprecision(17) << endl;
+    // ofs << (double)a << endl;
+    // ofs.close();
 }
 #pragma endregion
 
@@ -69,13 +79,13 @@ void Simulation::Init_PlacePreys()
     filePath += "Preys/Chromosome.csv";
     Chromosome chr_preys(filePath.string(), false);
     chr_preys.InitTakeEnergyRate(INIT_TAKEENERGYRATE);
-    cout << chr_preys.TakeEnergyRate << endl;
     for (int n = 0; n < N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
         SimulateFlock.AddNewPrey(p);
         forID++;
     }
+    SimulateFlock.CalcPreysDistances();
 }
 
 void Simulation::Init_PlacePredators()
@@ -98,6 +108,7 @@ void Simulation::Init_PlacePredators()
             SimulateFlock.MatDiffPos.insert(make_pair(make_pair(id, pID), PVector(0, 0)));
         }
     }
+    SimulateFlock.CalcPredatorDistances(Predators);
 }
 
 void Simulation::PreFlocking()

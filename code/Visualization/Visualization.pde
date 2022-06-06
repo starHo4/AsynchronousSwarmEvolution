@@ -75,7 +75,6 @@ void drawFlock()
             continue;
         }
 
-        println("hoshi");
         for (int j = 0; j < HeaderNum; j++)
         {
             each_Data[j] = Data_timestep[frameCount][i][j];
