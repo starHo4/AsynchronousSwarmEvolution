@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 
         Simulation simulation(_N);
         // simulation.RunSimulation();
-        simulation.TestSimulation();
+        simulation.RunSimulation();
     }
     return 0;
 }

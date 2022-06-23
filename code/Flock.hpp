@@ -6,8 +6,8 @@
 #include "Predator.hpp"
 #include "Prey.hpp"
 
-class Prey;
 class Predator;
+class Prey;
 
 class Flock
 {
@@ -22,19 +22,28 @@ public:
 
     //* Public Variables *//
     int NumAlive;
+    int NumThreat;
     // Distance Matrix
     MatrixDistance MatDistance;
     MatrixDiffPos MatDiffPos;
 
+    // Measures
+    double Density;
+    double Dispersion;
+
     //* Public Methods *//
     void Init();
-    void AddNewPrey(shared_ptr<Prey> &a);
+    void AddOnlyNewPreys(shared_ptr<Prey> &a);
+    void AddNewPrey(shared_ptr<Prey> &a, vector<Predator> &_preds);
     void PreFlocking(mt19937_64 &mt);
     // Interaction between preys
+    bool CheckExtinctOrExplosion(const double &_N, const int &_t, const int _iteNum);
     void Flocking(mt19937_64 &mt);
     void Update();
     void CalcEnergy(mt19937_64 &mt);
+    void GenerateNewPreys(mt19937_64 &mt, ll &forID, vector<Predator> &_preds);
     void RemoveDeadPreys();
+    void CalcMeasures();
     void CalcPreysDistances();
     void CalcPredatorDistances(const vector<Predator> &_preds);
     void CalcEachDistance(const ll &_firstID, const ll &_secondID);

@@ -36,7 +36,8 @@ protected:
 public:
     //* Constructors & Destructor *//
     Agent() {}
-    Agent(mt19937_64 &mt, const Chromosome &_chr, const long long &_id);
+    Agent(mt19937_64 &mt, const Chromosome &_chr, const ll &_id);
+    Agent(mt19937_64 &mt, const Chromosome &_chr, const PVector &_parentPos, const ll &_id);
     virtual ~Agent() {}
 
     //* Public Variables *//
@@ -45,6 +46,8 @@ public:
     bool F_predator;
     // Whether or not this prey is a threat
     bool F_threat;
+
+    Chromosome Genome;
 
     //* Public Methods *//
     virtual void Run(mt19937_64 &mt, Flock &f);

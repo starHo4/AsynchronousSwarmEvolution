@@ -20,14 +20,18 @@
 
 // Parameters for preys
 #define N_INIT_PREYS 50
+#define N_EXTINCT 1
+#define N_EXPLOSION 200
 #define INIT_MEAN_ENERGY 2000.0
-#define INIT_STD_ENERGY 100.0
+#define INIT_STD_ENERGY 200.0
+#define DIVISION_ENERGY 4000.0
+#define FOOD_SUMENERGY 100.0
 #define RADIUS_PREY 100
 #define SPEED_PREY 1.0
 #define ANGLESPEED_PREY 8.0 // degree
 #define SAFETY_DIST 30.0
 #define N_SENSOR_LAYER_PREY 3
-#define LIFESPAN 2000
+#define LIFESPAN 3000
 
 // Parameters for predator
 #define N_PREDATOR 1

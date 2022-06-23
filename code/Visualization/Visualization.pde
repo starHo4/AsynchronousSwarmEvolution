@@ -1,4 +1,4 @@
-int TimeSteps = 1000;
+int TimeSteps = 5000;
 int FlockSize = 201;
 int HeaderNum = 9;
 
@@ -81,11 +81,12 @@ void drawFlock()
         }
         
         int fpredator_tmp = (int)each_Data[1];
+        int fthreat_tmp = (int)each_Data[2];
         PVector pos_tmp = new PVector((float)each_Data[3],(float)each_Data[4]);
         PVector vel_tmp = new PVector((float)each_Data[5],(float)each_Data[6]);
         double angle_tmp = each_Data[7];
         
-        flock[i].setParameter(fpredator_tmp, pos_tmp, vel_tmp, angle_tmp);
+        flock[i].setParameter(fpredator_tmp, fthreat_tmp, pos_tmp, vel_tmp, angle_tmp);
         flock[i].display();
     }
 }

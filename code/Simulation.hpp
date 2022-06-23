@@ -16,9 +16,10 @@ private:
 
     //* For Paramter Search *//
     double INIT_TAKEENERGYRATE;
+    int SurviveNum;
 
     // For Iteration of ID
-    long long forID;
+    ll forID;
     // Flock of preys
     Flock SimulateFlock;
     // Flock of predators
@@ -33,7 +34,7 @@ private:
     // Free running for preys
     void PreFlocking();
     // Main Loop
-    void MainLoop();
+    void MainLoop(const int _iteNum);
     // Predator's Update
     void PredatorsRun(mt19937_64 &mt);
     void PredatorsUpdate();

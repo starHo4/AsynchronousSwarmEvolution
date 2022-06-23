@@ -32,15 +32,12 @@ Chromosome::Chromosome(const string &fileName, const bool &_Fpredator)
     {
         fin >> setprecision(17);
         fin >> Genotype[i];
-        cout << setprecision(17);
-        cout << Genotype[i] << " ";
         i++;
         if(fin.eof())
         {
             break;
         }
     }
-    cout << endl;
     fin.close();
 
     if(i != size)

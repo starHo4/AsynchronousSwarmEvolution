@@ -10,19 +10,21 @@ class Prey : public Agent
 private:
 protected:
     //* Protected Methods *//
-    virtual void Detect(const Flock &f);
     bool JudgeThreat(const ll &_detectID);
 
 public:
     //* Constructors *//
     Prey() {}
     Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id);
+    Prey(mt19937_64 &mt, const Chromosome &_chr, const PVector &_parentPos, const ll &_id);
     //* Destructor *//
     virtual ~Prey() {}
 
     //* Public Variables *//
     // Energy
     double Energy;
+    // Lifespan
+    int Lifespan;
     // For Threat
     vector<ll> ListOfThreat;
     // For Measures
@@ -31,7 +33,9 @@ public:
 
     //* Public Methods *//
     virtual void Run(mt19937_64 &mt, Flock &f);
+    void Detect(const Flock &f);
     virtual void RobEnergy(mt19937_64 &mt, Flock &f);
+    void TakeFood(const Flock &f);
     void CheckDead();
 };
 

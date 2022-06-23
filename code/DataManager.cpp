@@ -5,7 +5,7 @@ void DataManager::SaveFlock_Timestep(const double &_N, const int &_ts, const Flo
 {
     filePath = filesystem::current_path();
     filePath += FILEPATH;
-    double N = _N * 10;
+    double N = _N * 1000;
     MakeDirectory("N", (int)N);
     filePath += "/forMovie/";
     if (!filesystem::exists(filePath))
@@ -50,6 +50,40 @@ void DataManager::SaveFlock_Timestep(const double &_N, const int &_ts, const Flo
 
         ofs << id << "," << f_predator << "," << f_threat << "," << pos_x << "," << pos_y << "," << vel_x << "," << vel_y << "," << angle << "," << action << endl;
     }
+
+    ofs.close();
+}
+
+void DataManager::SaveFlock_N_Nthreat(const double &_N, const int &_ts, const Flock &f)
+{
+    filePath = filesystem::current_path();
+    filePath += FILEPATH;
+    double N = _N * 100;
+    MakeDirectory("N", (int)N);
+    filePath += "/N_Nthreat.csv";
+
+    ofstream ofs(filePath.string(), ios::app);
+
+    int Nalive = f.NumAlive;
+    int Nthreat = f.NumThreat;
+    ofs << Nalive << "," << Nthreat << endl;
+
+    ofs.close();
+}
+
+void DataManager::SaveFlock_FlockMeasures(const double &_N, const int &_ts, const Flock &f)
+{
+    filePath = filesystem::current_path();
+    filePath += FILEPATH;
+    double N = _N * 100;
+    MakeDirectory("N", (int)N);
+    filePath += "/FlockMeasures.csv";
+
+    ofstream ofs(filePath.string(), ios::app);
+
+    double density = f.Density;
+    double dispersion = f.Dispersion;
+    ofs << (double)density << "," << (double)dispersion << endl;
 
     ofs.close();
 }

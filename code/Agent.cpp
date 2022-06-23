@@ -1,10 +1,22 @@
 #include "Agent.hpp"
 
 #pragma region Constructor
-Agent::Agent(mt19937_64 &mt, const Chromosome &_chr, const long long &_id)
+Agent::Agent(mt19937_64 &mt, const Chromosome &_chr, const ll &_id)
 {
     ID = _id;
     F_live = true;
+
+    Genome = _chr;
+
+    VisionAngle = 2 * PI - (N_SEGMENT_SENSOR * EACH_SEGMENT_ANGLE) / 180 * PI;
+}
+
+Agent::Agent(mt19937_64 &mt, const Chromosome &_chr, const PVector &_parentPos, const ll &_id)
+{
+    ID = _id;
+    F_live = true;
+
+    Genome = _chr;
 
     VisionAngle = 2 * PI - (N_SEGMENT_SENSOR * EACH_SEGMENT_ANGLE) / 180 * PI;
 }

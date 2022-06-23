@@ -3,70 +3,53 @@
 #pragma region Constructors
 Simulation::Simulation(const int &_N)
 {
-    generalSeed = 0;
+    generalSeed = _N;
     mt.seed(generalSeed);
     uniform_int_distribution<int> uid_Seed(0, INT32_MAX);
     int NewRandomSeed = uid_Seed(mt);
     mt.seed(NewRandomSeed);
 
-    INIT_TAKEENERGYRATE = (double)_N / 10;
-    if (_N < 0 || _N > 10)
+    INIT_TAKEENERGYRATE = (double)_N / 100;
+    if (_N < 0 || _N > 100)
     {
+        cout << "Please set a seed as a range between 0 to 10" << endl;
         abort();
     }
 
-    forID = 0;
+    forID = 1;
 }
 #pragma endregion
 
 #pragma region PublicMethods
 void Simulation::RunSimulation()
 {
-    // Initialization
-    Init_PlacePreys();
+    SurviveNum = 0;
+    for (int i = 0; i < 100; i++)
+    {
+        // Initialization
+        Init_PlacePreys();
 
-    // Simulate for free running
-    PreFlocking();
+        // Simulate for free running
+        PreFlocking();
 
-    // Place Predators into the environment
-    Init_PlacePredators();
+        // Place Predators into the environment
+        Init_PlacePredators();
 
-    // Main Loop
-    MainLoop();
+        // Main Loop
+        MainLoop(i);
+        SurviveNum++;
+    }
+    filesystem::path filePath = filesystem::current_path();
+    filePath += FILEPATH;
+    filePath += "N" + to_string((int)(INIT_TAKEENERGYRATE * 1000)) + "/";
+    filePath += "SurviveNum.txt";
+    ofstream ofs(filePath.string(), ios::app);
+    ofs << SurviveNum << endl;
+    ofs.close();
 }
 
 void Simulation::TestSimulation()
 {
-    Init_PlacePreys();
-    PreFlocking();
-    Init_PlacePredators();
-
-    for (int t = 0; t < 1000; t++)
-    {
-        SimulateFlock.Flocking(mt);
-        SimulateFlock.Update();
-        SimulateFlock.CalcEnergy(mt);
-        SimulateFlock.RemoveDeadPreys();
-        SimulateFlock.CalcPreysDistances();
-
-        PredatorsRun(mt);
-        PredatorsUpdate();
-        PredatorsPredation(mt);
-        SimulateFlock.RemoveDeadPreys();
-        SimulateFlock.CalcPredatorDistances(Predators);
-
-        DManager.SaveFlock_Timestep(INIT_TAKEENERGYRATE, t, SimulateFlock, Predators);
-    }
-
-    // filesystem::path filePath = filesystem::current_path();
-    // filePath += FILEPATH;
-    // filePath += "test.csv";
-    // double a = 1.23456789101112131;
-    // ofstream ofs(filePath.string(), ios::app);
-    // ofs << fixed << endl;
-    // ofs << setprecision(17) << endl;
-    // ofs << (double)a << endl;
-    // ofs.close();
 }
 #pragma endregion
 
@@ -82,7 +65,7 @@ void Simulation::Init_PlacePreys()
     for (int n = 0; n < N_INIT_PREYS; n++)
     {
         shared_ptr<Prey> p = make_shared<Prey>(mt, chr_preys, forID);
-        SimulateFlock.AddNewPrey(p);
+        SimulateFlock.AddOnlyNewPreys(p);
         forID++;
     }
     SimulateFlock.CalcPreysDistances();
@@ -121,15 +104,23 @@ void Simulation::PreFlocking()
     }
 }
 
-void Simulation::MainLoop()
+void Simulation::MainLoop(const int _iteNum)
 {
     for (int t = 0; t < MAX_TIMESTEPS; t++)
     {
+#pragma region CheckExtinctOrExplosion
+        if (SimulateFlock.CheckExtinctOrExplosion(INIT_TAKEENERGYRATE, t, _iteNum))
+        {
+            return;
+        }
+#pragma endregion CheckExtinctOrExplosion
+
 #pragma region InteractionPreys
-        SimulateFlock.Flocking(mt);
-        SimulateFlock.Update();
-        SimulateFlock.CalcEnergy(mt);
-        SimulateFlock.RemoveDeadPreys();
+        SimulateFlock.Flocking(mt);                           // Determine the action
+        SimulateFlock.Update();                               // Move the direction which is determined in the previous processing
+        SimulateFlock.CalcEnergy(mt);                         // TakeFood() and RobEnergy() (RobEnergy() is processing PreyThreat only)
+        SimulateFlock.GenerateNewPreys(mt, forID, Predators); // Generate new preys with division of parent preys whose energy is beyond threshold
+        SimulateFlock.RemoveDeadPreys();                      // Lifespan is decreasing and the dead preys are removed; the dead prey is the prey whose energy or lifespan is below 0.
         SimulateFlock.CalcPreysDistances();
 #pragma endregion InteractionPreys
 
@@ -140,6 +131,29 @@ void Simulation::MainLoop()
         SimulateFlock.RemoveDeadPreys();
         SimulateFlock.CalcPredatorDistances(Predators);
 #pragma endregion PredatorsAttack
+
+#pragma region SaveData
+        if (SAVEMOVIE)
+        {
+            DManager.SaveFlock_Timestep(INIT_TAKEENERGYRATE, t, SimulateFlock, Predators);
+        }
+
+        if (t == 0 || t % SAVEDATA_INTERVAL == SAVEDATA_INTERVAL - 1)
+        {
+            SimulateFlock.CalcMeasures();
+            DManager.SaveFlock_N_Nthreat(INIT_TAKEENERGYRATE, t, SimulateFlock);
+            DManager.SaveFlock_FlockMeasures(INIT_TAKEENERGYRATE, t, SimulateFlock);
+        }
+#pragma endregion SaveData
+
+#pragma region OutputResult
+        if (t == 0 || t % 10000 == 9999)
+        {
+            cout << "Seed : " << INIT_TAKEENERGYRATE << ", timestep : " << t << endl;
+            cout << "N : " << SimulateFlock.NumAlive << ", N_threat : " << SimulateFlock.NumThreat << endl;
+            cout << "Density : " << SimulateFlock.Density << ", Dispersion : " << SimulateFlock.Dispersion << endl;
+        }
+#pragma endregion OutputResult
     }
 }
 

@@ -21,6 +21,8 @@ class DataManager
 
     //* Public Methods *//
     void SaveFlock_Timestep(const double &_N, const int &_ts, const Flock &f, const vector<Predator> &_preds);
+    void SaveFlock_N_Nthreat(const double &_N, const int &_ts, const Flock &f);
+    void SaveFlock_FlockMeasures(const double &_N, const int &_ts, const Flock &f);
 };
 
 #endif

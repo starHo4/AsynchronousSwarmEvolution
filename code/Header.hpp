@@ -22,10 +22,8 @@ using namespace std;
 // Global Consts for Reports
 #define FILEPATH "/data/"
 #define FILEPATH_GENOME "/genome/"
-#define SAVEMOVIE true
-#define SAVEMOVIE_INTERVAL 100
-#define SAVEPOPUL_INTERVAL 100
-#define SAVECHROM_INTERVAL 1000
+#define SAVEMOVIE false
+#define SAVEDATA_INTERVAL 10
 
 // Include Parameters
 #include "Parameter.hpp"

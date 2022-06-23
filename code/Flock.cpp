@@ -1,17 +1,19 @@
 #include "Flock.hpp"
+#include "PreyThreat.hpp"
 
 #pragma region PublicMethods
 void Flock::Init()
 {
     flock.clear();
     NumAlive = 0;
+    NumThreat = 0;
 
     //* To Add processing!! *//
     MatDistance.clear();
     MatDiffPos.clear();
 }
 
-void Flock::AddNewPrey(shared_ptr<Prey> &a)
+void Flock::AddOnlyNewPreys(shared_ptr<Prey> &a)
 {
     flock.emplace_back(a);
     NumAlive++;
@@ -35,12 +37,78 @@ void Flock::AddNewPrey(shared_ptr<Prey> &a)
     a.reset();
 }
 
+void Flock::AddNewPrey(shared_ptr<Prey> &a, vector<Predator> &_preds)
+{
+    flock.emplace_back(a);
+    NumAlive++;
+    if (a->F_threat)
+    {
+        NumThreat++;
+    }
+
+    // Add new distances and differences of Pos between "a" and others
+    for (int i = 0; i < flock.size(); i++)
+    {
+        ll firstID = flock[i]->ID;
+        ll secondID = a->ID;
+        if (firstID != secondID)
+        {
+            if (firstID > secondID)
+            {
+                swap(firstID, secondID);
+            }
+            MatDistance.insert(make_pair(make_pair(firstID, secondID), 0));
+            MatDiffPos.insert(make_pair(make_pair(firstID, secondID), PVector(0, 0)));
+            CalcEachDistance(firstID, secondID);
+        }
+    }
+    for (int i = 0; i < _preds.size(); i++)
+    {
+        ll firstID = _preds[i].ID;
+        ll secondID = a->ID;
+        if (firstID != secondID)
+        {
+            if (firstID > secondID)
+            {
+                swap(firstID, secondID);
+            }
+            MatDistance.insert(make_pair(make_pair(firstID, secondID), 0));
+            MatDiffPos.insert(make_pair(make_pair(firstID, secondID), PVector(0, 0)));
+            CalcEachPredDistance(firstID, secondID, _preds);
+        }
+    }
+    a.reset();
+}
+
 void Flock::PreFlocking(mt19937_64 &mt)
 {
     for (int i = 0; i < flock.size(); i++)
     {
         flock[i]->Run(mt, *this);
     }
+}
+
+bool Flock::CheckExtinctOrExplosion(const double &_N, const int &_t, const int _iteNum)
+{
+    if (NumAlive <= 1)
+    {
+        cout << endl;
+        cout << "Extinct!" << endl;
+        cout << "Iteration : " << _iteNum << ", N : " << _N << ", t : " << _t << endl;
+        cout << endl;
+        return true;
+        // exit(0);
+    }
+    if (NumAlive >= N_EXPLOSION)
+    {
+        cout << endl;
+        cout << "Explosion!" << endl;
+        cout << "Iteration : " << _iteNum << "N : " << _N << ", t : " << _t << endl;
+        cout << endl;
+        return true;
+        // exit(0);
+    }
+    return false;
 }
 
 void Flock::Flocking(mt19937_64 &mt)
@@ -69,6 +137,7 @@ void Flock::CalcEnergy(mt19937_64 &mt)
 {
     for (int i = 0; i < flock.size(); i++)
     {
+        flock[i]->TakeFood(*this);
         if (flock[i]->F_threat)
         {
             flock[i]->RobEnergy(mt, *this);
@@ -76,16 +145,73 @@ void Flock::CalcEnergy(mt19937_64 &mt)
     }
 }
 
+void Flock::GenerateNewPreys(mt19937_64 &mt, ll &forID, vector<Predator> &_preds)
+{
+    vector<ll> parents = vector<ll>();
+    vector<int> parents_index = vector<int>();
+    vector<Chromosome> parents_chroms = vector<Chromosome>();
+    for (int i = 0; i < flock.size(); i++)
+    {
+        if (flock[i]->Energy >= DIVISION_ENERGY)
+        {
+            flock[i]->F_live = false;
+            parents.push_back(flock[i]->ID);
+            parents_index.push_back(i);
+            parents_chroms.push_back(flock[i]->Genome);
+        }
+    }
+    for (int i = 0; i < parents.size(); i++)
+    {
+        Chromosome NewGenome1 = parents_chroms[i];
+        PVector parentPos = flock[parents_index[i]]->getPos();
+        NewGenome1.Mutation(mt);
+        shared_ptr<Prey> p;
+        if (NewGenome1.F_Threat)
+        {
+            p = make_shared<PreyThreat>(mt, NewGenome1, parentPos, forID);
+        }
+        else
+        {
+            p = make_shared<Prey>(mt, NewGenome1, parentPos, forID);
+        }
+        AddNewPrey(p, _preds);
+        forID++;
+        Chromosome NewGenome2 = parents_chroms[i];
+        NewGenome2.Mutation(mt);
+        if (NewGenome1.F_Threat)
+        {
+            p = make_shared<PreyThreat>(mt, NewGenome2, parentPos, forID);
+        }
+        else
+        {
+            p = make_shared<Prey>(mt, NewGenome2, parentPos, forID);
+        }
+        AddNewPrey(p, _preds);
+        forID++;
+    }
+
+    for (int i = 0; i < flock.size(); i++)
+    {
+        flock[i]->Detect(*this);
+    }
+}
+
 void Flock::RemoveDeadPreys()
 {
     // Extract ID for removing dead preys
     vector<ll> rmvID = vector<ll>();
+    int numRemoveThreat = 0;
     for (int i = 0; i < flock.size(); i++)
     {
+        flock[i]->Lifespan--;
         flock[i]->CheckDead();
         if (!flock[i]->F_live)
         {
             rmvID.push_back(flock[i]->ID);
+            if (flock[i]->F_threat)
+            {
+                numRemoveThreat++;
+            }
         }
     }
 
@@ -94,6 +220,7 @@ void Flock::RemoveDeadPreys()
                          { return !a->F_live; });
     flock.erase(rmv, flock.end());
     NumAlive = flock.size();
+    NumThreat -= numRemoveThreat;
 
     // Remove distances related to the dead preys
     for (int i = 0; i < rmvID.size(); i++)
@@ -130,6 +257,31 @@ void Flock::RemoveDeadPreys()
             }
         }
     }
+}
+
+void Flock::CalcMeasures()
+{
+    // Density
+    Density = 0;
+    for (int i = 0; i < flock.size(); i++)
+    {
+        if (flock[i]->F_live)
+        {
+            Density += flock[i]->NearbyCount;
+        }
+    }
+    Density /= NumAlive;
+
+    // Dispersion
+    Dispersion = 0;
+    for (int i = 0; i < flock.size(); i++)
+    {
+        if (flock[i]->F_live)
+        {
+            Dispersion += flock[i]->NearestDistance;
+        }
+    }
+    Dispersion /= NumAlive;
 }
 
 void Flock::CalcPreysDistances()
@@ -180,6 +332,7 @@ void Flock::CalcEachDistance(const ll &_firstID, const ll &_secondID)
                                   { return a->ID == _secondID; });
     if (itr_firstPrey == flock.end() || itr_secondPrey == flock.end())
     {
+        cout << _firstID << ", " << _secondID << endl;
         cout << "ID is not found in CalcEachDistance" << endl;
         abort();
     }

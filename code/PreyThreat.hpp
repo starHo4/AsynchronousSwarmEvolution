@@ -5,6 +5,8 @@
 #include "Prey.hpp"
 #include "Flock.hpp"
 
+class Flock;
+
 class PreyThreat : public Prey
 {
 private:
@@ -12,6 +14,7 @@ public:
     //* Constructors *//
     PreyThreat() {}
     PreyThreat(mt19937_64 &mt, Chromosome &_chr, const long long &_id);
+    PreyThreat(mt19937_64 &mt, const Chromosome &_chr, const PVector &_parentPos, const ll &_id);
     //* Destructor *//
     ~PreyThreat() {}
 

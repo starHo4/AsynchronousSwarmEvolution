@@ -28,6 +28,57 @@ Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const ll &_id) : Agent::Agent
     {
         Energy = 1;
     }
+    Lifespan = LIFESPAN;
+    // Init for Threat
+    ListOfThreat = vector<ll>();
+}
+
+Prey::Prey(mt19937_64 &mt, const Chromosome &_chr, const PVector &_parentPos, const ll &_id) : Agent::Agent(mt, _chr, _parentPos, _id)
+{
+    F_predator = false;
+    F_threat = false;
+
+    uniform_real_distribution<double> udd_SafeDist(0, SAFETY_DIST);
+    uniform_real_distribution<double> udd_pi(0, 2 * PI);
+    double r = udd_SafeDist(mt);
+    double theta = udd_pi(mt);
+    PVector diffPos = PVector(r * cos(theta), r * sin(theta));
+    Pos = _parentPos + diffPos;
+    if (Pos.x < -FIELD_W / 2)
+    {
+        Pos.x += FIELD_W;
+    }
+    else if (Pos.x > FIELD_W / 2)
+    {
+        Pos.x -= FIELD_W;
+    }
+    if (Pos.y < -FIELD_H / 2)
+    {
+        Pos.y += FIELD_H;
+    }
+    else if (Pos.y > FIELD_H / 2)
+    {
+        Pos.y -= FIELD_H;
+    }
+    Angle = udd_pi(mt);
+    Vel = PVector(cos(Angle), sin(Angle));
+    Action = -1;
+
+    Radius = RADIUS_PREY;
+    Speed = SPEED_PREY;
+    AngleSpeed = ANGLESPEED_PREY / 180 * PI;
+
+    // Init Brain
+    Brain = RNN(_chr.Genotype, N_SENSOR_LAYER_PREY * N_SENSOR, N_MEMORY, N_ACTUATOR);
+
+    // Init Energy
+    normal_distribution<double> nd_energy(INIT_MEAN_ENERGY, INIT_STD_ENERGY);
+    Energy = nd_energy(mt);
+    if (Energy < 0)
+    {
+        Energy = 1;
+    }
+    Lifespan = LIFESPAN;
     // Init for Threat
     ListOfThreat = vector<ll>();
 }
@@ -55,7 +106,11 @@ void Prey::RobEnergy(mt19937_64 &mt, Flock &f)
 
 void Prey::CheckDead()
 {
-    if (Energy < 0)
+    if (Energy <= 0)
+    {
+        F_live = false;
+    }
+    if (Lifespan < 0)
     {
         F_live = false;
     }
@@ -128,5 +183,10 @@ bool Prey::JudgeThreat(const ll &_detectID)
         }
     }
     return false;
+}
+
+void Prey::TakeFood(const Flock &f)
+{
+    Energy += (FOOD_SUMENERGY / f.NumAlive);
 }
 #pragma endregion ProtectedMethods
