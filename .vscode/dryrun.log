@@ -1,7 +1,11 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory `/Users/hoshi/MyDrive/大学院関係/_hash_lab_of_hoshi/Programming/c++/ArtificialEcology_Swarm/ver9_Asychronous/ver9.0.1_WithIdentifyAbility_WithoutThreshold_ForParameterSearchOfTakeEnergyRate'
- 
-make: Leaving directory `/Users/hoshi/MyDrive/大学院関係/_hash_lab_of_hoshi/Programming/c++/ArtificialEcology_Swarm/ver9_Asychronous/ver9.0.1_WithIdentifyAbility_WithoutThreshold_ForParameterSearchOfTakeEnergyRate'
+make --dry-run --always-make --keep-going --print-directory
+<<<<<<< HEAD
+make: Entering directory `/Users/hoshi/Documents/GitHub/AsynchronousSwarmEvolution'
+make: Leaving directory `/Users/hoshi/Documents/GitHub/AsynchronousSwarmEvolution'
+=======
+make: Entering directory `/Users/hoshi/マイドライブ/大学院関係/_hash_lab_of_hoshi/Programming/c++/ArtificialEcology_Swarm/ver9_Asychronous/ver9.0.1_WithIdentifyAbility_WithoutThreshold_ForParameterSearchOfTakeEnergyRate'
+make: Leaving directory `/Users/hoshi/マイドライブ/大学院関係/_hash_lab_of_hoshi/Programming/c++/ArtificialEcology_Swarm/ver9_Asychronous/ver9.0.1_WithIdentifyAbility_WithoutThreshold_ForParameterSearchOfTakeEnergyRate'
+>>>>>>> 5543d9116ad06c6ffb9cc1a24cb2b52135480eb3
  
 make: *** No targets specified and no makefile found.  Stop.
 
